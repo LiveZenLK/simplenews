@@ -22,17 +22,26 @@
     
 	<?php echo form_open($this->uri->uri_string(), 'class="form-horizontal"'); ?>
     <fieldset>
-    <div class="form-actions">  
+    <div class="form-actions">     
+  
+    <!-- BOF CATEGORIES form_dropdown -->  
+	<select name="category_id">
+    <?php foreach ($categories as $category) : ?>
+    	<?php $array[$category->id] = $category->category_name; ?>
+	<?php endforeach; ?>    
+	<?php echo form_dropdown('category_id', $array, $news[0]->category_id); ?>
+    </select>
+    <!-- EOF CATEGORIES form_dropdown -->
     
-     <!-- BOF CATEGORIES -->
+     <!-- BOF CATEGORIES set_select -->
     <select name="category_id">    
 	<?php foreach ($categories as $category) : ?>
-        <option value="<?php echo $category->id ?>" <?php echo set_select('category_id', $category->id ) ?>>
+        <option value="<?php echo $category->id ?>" <?php echo set_select('category_id', $category->id) ?>>
             <?php echo $category->category_name ?>
         </option>
     <?php endforeach; ?>
     </select>
-    <!-- EOF CATEGORIES -->
+    <!-- EOF CATEGORIES set_select -->
    
 	<?php echo form_label('id', 'id'); ?>            
     <input type="text" name="title" id="" value="<?php echo set_value('id', isset($news['id']) ? $news['id'] : ''); ?>" />
