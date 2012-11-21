@@ -24,19 +24,19 @@
     <fieldset>
     <div class="form-actions">     
   
-    <!-- BOF CATEGORIES form_dropdown -->  
-	<select name="category_id">
+    <!-- BOF CATEGORIES form_dropdown -->
+    <?php echo form_label('category_id', 'category_id'); ?>
     <?php foreach ($categories as $category) : ?>
     	<?php $array[$category->id] = $category->category_name; ?>
 	<?php endforeach; ?>    
-	<?php echo form_dropdown('category_id', $array, $news[0]->category_id); ?>
-    </select>
+	<?php echo form_dropdown('category_id', $array, $news['category_id']); ?>
     <!-- EOF CATEGORIES form_dropdown -->
     
-     <!-- BOF CATEGORIES set_select -->
-    <select name="category_id">    
+	<!-- BOF CATEGORIES set_select -->
+	<?php echo form_label('category_id', 'category_id'); ?>
+    <select name="category_id">
 	<?php foreach ($categories as $category) : ?>
-        <option value="<?php echo $category->id ?>" <?php echo set_select('category_id', $category->id) ?>>
+        <option value="<?php echo $category->id ?>" <?php echo set_select('category_id', $category->id, isset($news['category_id'])) ?>>
             <?php echo $category->category_name ?>
         </option>
     <?php endforeach; ?>

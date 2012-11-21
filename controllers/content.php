@@ -57,10 +57,9 @@ class content extends Admin_Controller {
 		}
 		
 		$category = $this->category_model->find_all();	
-//		$this->news_model->where('category_id',$id);
-		
-		Template::set('categories', $category);		
-		
+//		$this->news_model->where('category_id',$id);		
+		Template::set('categories', $category);
+				
 		$editnewsdata = $this->news_model->find($id);
 		Template::set('news', $editnewsdata);
 		
