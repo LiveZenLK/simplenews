@@ -2,7 +2,7 @@
 
 class Category_model extends BF_Model {
 	
-	protected $table		= "category";
+	protected $table		= "newscategory";
 	protected $key			= "id";
 	protected $soft_deletes	= false;
 	protected $date_format	= "datetime";

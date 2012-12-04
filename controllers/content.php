@@ -9,7 +9,10 @@ class content extends Admin_Controller {
 		$this->lang->load('simplenews');				
 		$this->load->helper('form');
 		$this->load->model('news_model', null, true);
-		$this->load->model('category_model', null, true);		
+		$this->load->model('category_model', null, true);
+		$this->load->model('newsc_model', null, true);
+		
+		
 		Template::set_block('sub_nav', 'content/_sub_nav');
 	}
 	//--------------------------------------------------------------------
@@ -47,7 +50,7 @@ class content extends Admin_Controller {
 			redirect(SITE_AREA .'/content/simplenews/');
 		}
 		if ($this->input->post('submit')) {
-			if ($this->save_item('update', $id)) {
+			if ($this->save_news('update', $id)) {
 				// Log the activity
 				$this->activity_model->log_activity($this->current_user->id, lang('simplenews_act_edit_record').': ' . $id . ' : ' . $this->input->ip_address(), 'simplenews');
 				Template::set_message(lang('simplenews_edit_success'), 'success');
@@ -56,21 +59,86 @@ class content extends Admin_Controller {
 			}
 		}
 		
-		$category = $this->category_model->find_all();	
-//		$this->news_model->where('category_id',$id);		
+//		$boxe = '1';
+		$boxe = $this->newsc_model->find($id);
+		Template::set('newscheckbox', $boxe);
+		
+		$category = $this->category_model->find_all();
+		$this->news_model->where('category_id',$id);
 		Template::set('categories', $category);
-				
+		
 		$editnewsdata = $this->news_model->find($id);
 		Template::set('news', $editnewsdata);
+
+//		$c = $this->checkboxes_model->find();
+//		$selectmultiple = $this->news_model->find_by('selectmultiple');
+//		Template::set('selectmultiples', $selectmultiple);
+		
+//		$checkbox = $this->news_model->find('checkbox', $id);
+//		Template::set('checkboxs', $checkbox);
 		
 		Template::set('toolbar_title', lang('simplenews_edit') . ' Itens');
-		Template::render();	
-				
+		Template::render();
 	}
-
-
-
-
+	
+	// saving news  
+	// saving news 
+	// saving news 
+	private function save_news($type='insert', $id=0) {
+		
+		if ($type == 'update') {$_POST['id'] = $id; }
+		
+		$this->form_validation->set_rules('title', 'title', 					'required|trim|max_length[255]|strip_tags|xss_clean');
+		$this->form_validation->set_rules('category_id', 'category_id', 		'numeric|xss_clean');
+		$this->form_validation->set_rules('status', 'status', 					'numeric|xss_clean');
+		$this->form_validation->set_rules('textarea', 'textarea', 				'required|trim|max_length[255]|strip_tags|xss_clean');
+		$this->form_validation->set_rules('selectmultiple', 'selectmultiple', 	'required|trim|max_length[255]|strip_tags|xss_clean');
+		$this->form_validation->set_rules('checkbox', 'checkbox', 				'required|trim|max_length[255]|strip_tags|xss_clean');
+		
+		if ($this->form_validation->run() === FALSE) {
+			return FALSE;
+		}
+		
+		// make sure we only pass in the fields we want
+		$data = array();
+		$data['title']       		= $this->input->post('title');
+		$data['category_id'] 	    = $this->input->post('category_id');
+		$data['status']      		= $this->input->post('status');
+		$data['textarea']     		= $this->input->post('textarea');
+		$data['selectmultiple']     = $this->input->post('selectmultiple');
+		$data['checkbox']       	= $this->input->post('checkbox');
+		/*
+		if ( ! $this->upload->do_upload('foto')) {
+			$this->error = $this->upload->display_errors();
+			return FALSE;
+		} else {
+         $img_data = $this->upload->data();
+         $data['foto'] = $img_data['foto']; 
+		}
+		$config['upload_path'] = realpath( FCPATH.'assets/images/');
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '0';
+		$config['max_width'] = '0';
+		$config['max_height'] = '0';
+		$this->load->library('upload', $config);
+		*/
+		if ($type == 'insert')
+		{
+			$id = $this->news_model->insert($data);
+			if (is_numeric($id))
+			{
+				$return = $id;
+			} else
+			{
+				$return = FALSE;
+			}
+		}
+		else if ($type == 'update')
+		{
+			$return = $this->news_model->update($id, $data);
+		}
+		return $return;
+	}
 	/*
 		Method: edit()
 		Allows editing of simplenews data.
