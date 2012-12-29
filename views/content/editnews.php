@@ -15,14 +15,13 @@ if( isset($news) ) { $news = (array)$news; }
 	$id = isset($categories['id']) ? $categories['id'] : '';
 ?>
 <?php // Change the css classes to suit your needs
-if( isset($checkboxes) ) { $checkboxes = (array)$checkboxes; }
-	$id = isset($checkboxes['id']) ? $news['id'] : '';
+	if( isset($defaultcheckbox) ) { $defaultcheckbox = (array)$defaultcheckbox; }
+//	$id = isset($defaultcheckbox['id']) ? $defaultcheckbox['id'] : '';
 ?>
 <?php // Change the css classes to suit your needs
-if( isset($checkboxestwo) ) { $checkboxestwo = (array)$checkboxestwo; }
-	$id = isset($checkboxestwo['id']) ? $checkboxestwo['id'] : '';
+//if( isset($defaultcheckboxtwo) ) { $defaultcheckboxtwo = (array)$defaultcheckboxtwo; }
+//	$id = isset($defaultcheckboxtwo['id']) ? $defaultcheckboxtwo['id'] : '';
 ?>
-
 
 
 <?php
@@ -60,35 +59,42 @@ if( isset($checkboxestwo) ) { $checkboxestwo = (array)$checkboxestwo; }
 			echo 'title : ' . $news['title'] . '<br />';
 			echo 'category_id : ' . $news['category_id'] . '<br />';
             echo 'status : ' . $news['status'] . '<br />';
-//			echo '<br /><br />';
-//			echo 'Default checkboxes : ' . $defaultcheckbox->checkboxes . '<br /><br />';
-			echo 'Item checkboxes : ' .	$news['checkbox'] . '<br /><br />';
+			echo 'News selected checkboxes : ' . $news['checkbox'] . '<br />';
+			echo '<br />Default Checkboxes : ' . $defaultcheckbox['checkboxes'] . '<br /><br />';
+//			echo 'Default checkboxes two : ' . $defaultcheckboxtwo['checkboxes'] . '<br /><br />';
+			
+			$ex = explode('||', $defaultcheckboxtwo->checkboxes);
+//			$ex = explode('||', $defaultcheckboxtwo['checkboxes']);
+//			$ex = $defaultcheckboxtwo->checkboxes;			
+			echo 'Explode Default checkboxes : ' . $ex . '<br /><br />';
+
+/*			echo 'Item checkboxes : ' .	$news['checkbox'] . '<br /><br />';
 			echo '<br />';
 			$ex = explode(',', $news['checkbox']);
 			foreach ($ex as $exs) :
-				echo 'Selectmultiple : ' . $exs . '<br /><br /><br />';
+				echo 'Checkbox : ' . $exs . '<br /><br /><br />';
 			endforeach;			
-//			echo 'selectmultiple : ' . $news['selectmultiple'] . '<br />';
-            echo 'checkbox : ' . $news['checkbox'] . '<br /><br /><br /><br />';
-			
-		?>
+			echo 'selectmultiple : ' . $news['selectmultiple'] . '<br />';
+*/
+	?>
     </div>
     
-	<?php foreach ($categories as $category) : ?>
-		<?php $array[$category->id] = $category->category_name; ?>
-	<?php endforeach; ?>    
-	<?php $selected = array('2', '3'); ?>   
-	<br /><br /><br /><br />
-	<?php echo form_multiselect('1shirts', $array, $selected); ?>
+	<?php
+	/*	
+	foreach ($categories as $category) : 
+	$array[$category->id] = $category->category_name; 
+	endforeach;	
+	$selected = array('2', '3');
+	*/	
+	?>
 	
-	
+	<?php // echo form_multiselect('1shirts', $array, $selected); ?>		
 
 	<?php // echo form_open($this->uri->uri_string(), 'class="form-horizontal"'); ?>
     <?php echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>
     <fieldset>
     <div class="form-actions">
-
-    <input type="hidden" id="" name="id" value="<?php echo set_value('id', isset($news['id']) ? $news['id'] : ''); ?>"  />
+	<input type="hidden" id="" name="id" value="<?php echo set_value('id', isset($news['id']) ? $news['id'] : ''); ?>"  />
 
     <!-- BOF Title form_input -->     
     <div class="control-group">
@@ -155,10 +161,10 @@ if( isset($checkboxestwo) ) { $checkboxestwo = (array)$checkboxestwo; }
 	//$checkboxesdefaults = $defaultcheckbox['checkboxes'];
 	//$checkboxesdefaultstwo = $defaultcheckboxtwo['checkboxes'];
 	
-	echo $defaultcheckbox->checkboxes;
-	echo $defaultcheckboxtwo->checkboxes;
+//	echo $defaultcheckbox->checkboxes;
+//	echo $defaultcheckboxtwo->checkboxes;
 	
-	echo $news['category_id'];
+//	echo $news['category_id'];
 
 	/*
 	foreach ($categories as $category) :

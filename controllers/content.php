@@ -8,10 +8,12 @@ class content extends Admin_Controller {
 		$this->auth->restrict('Simplenews.Content.View');
 		$this->lang->load('simplenews');				
 		$this->load->helper('form');
+		
 		$this->load->model('news_model', null, true);
 		$this->load->model('category_model', null, true);
 		$this->load->model('news_default_checkboxes_model', null, true);
 		$this->load->model('news_default_checkboxes_two_model', null, true);
+		
 		Template::set_block('sub_nav', 'content/_sub_nav');
 	}
 	//--------------------------------------------------------------------
@@ -57,17 +59,18 @@ class content extends Admin_Controller {
 			}
 		}
 		
-		$checkboxes = $this->news_default_checkboxes_model->find_all();		
-		Template::set('defaultcheckbox', $checkboxes);
-				
-		$checkboxestwo = $this->news_default_checkboxes_two_model->find_all();
-		Template::set('defaultcheckboxtwo', $checkboxestwo);
+		$editnewsdata = $this->news_model->find($id);
+		Template::set('news', $editnewsdata);
 		
-		$category = $this->category_model->find_all();		
+		$category = $this->category_model->find_all();
 		Template::set('categories', $category);
 		
-		$editnewsdata = $this->news_model->find($id);
-		Template::set('news', $editnewsdata);		
+		$checkboxes = $this->news_default_checkboxes_model->find(1);		
+		Template::set('defaultcheckbox', $checkboxes);
+				
+		$checkboxestwo = $this->news_default_checkboxes_two_model->find(1);
+		Template::set('defaultcheckboxtwo', $checkboxestwo);
+		
 	
 		Template::set('toolbar_title', lang('simplenews_edit') . ' Itens');
 		Template::render();

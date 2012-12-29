@@ -21,15 +21,15 @@ class Migration_Install_simplenews extends Migration {
 		$this->dbforge->create_table('news');
 		
 		$this->db->query("INSERT INTO {$prefix}news VALUES(1, '2012-08-24 02:51:16','2012-11-22 17:56:16', 'The 1 title ever',1,1, 
-		'The 1 text area','selectmultiple 1, selectmultiple 2, selectmultiple 3', 'newscheckboxes 1, newscheckboxes 2, newscheckboxes 3', 'produto1.jpg') ");
+		'The 1 text area','selectmultiple 1, selectmultiple 2, selectmultiple 3', 'options 1||options 2', 'produto1.jpg') ");
 		$this->db->query("INSERT INTO {$prefix}news VALUES(2, '2012-09-24 03:51:16','2012-11-22 17:56:16', 'The 2 title ever',2,0, 
-		'The 2 text area', 'selectmultiple 1, selectmultiple 2, selectmultiple 3' , 'newscheckboxes 1, newscheckboxes 2, newscheckboxes 3', 'produto2.jpg') ");		
+		'The 2 text area', 'selectmultiple 1, selectmultiple 2, selectmultiple 3' , 'options 2||options 3', 'produto2.jpg') ");		
 		$this->db->query("INSERT INTO {$prefix}news VALUES(3, '2012-10-24 04:51:16','2012-11-22 17:56:16', 'The 3 title ever',3,1, 
-		'The 3 text area', 'selectmultiple 1, selectmultiple 2, selectmultiple 3' , 'newscheckboxes 1, newscheckboxes 2, newscheckboxes 3', 'produto3.jpg') ");
+		'The 3 text area', 'selectmultiple 1, selectmultiple 2, selectmultiple 3' , 'options 4||options 5', 'produto3.jpg') ");
 		$this->db->query("INSERT INTO {$prefix}news VALUES(4, '2012-11-01 05:51:16','2012-11-22 17:56:16', 'The 4 title ever',4,0, 
-		'The 4 text area', 'selectmultiple 1, selectmultiple 2, selectmultiple 3' , 'newscheckboxes 1, newscheckboxes 2, newscheckboxes 3', 'produto4.jpg') ");
+		'The 4 text area', 'selectmultiple 1, selectmultiple 2, selectmultiple 3' , 'options 1||options 3', 'produto4.jpg') ");
 		$this->db->query("INSERT INTO {$prefix}news VALUES(5, '2012-11-01 06:51:16','2012-11-22 17:56:16', 'The 5 title ever',5,1, 
-		'The 5 text area', 'selectmultiple 1, selectmultiple 2, selectmultiple 3' , 'newscheckboxes 1, newscheckboxes 2, newscheckboxes 3', 'produto5.jpg') ");
+		'The 5 text area', 'selectmultiple 1, selectmultiple 2, selectmultiple 3' , 'options 2||options 4', 'produto5.jpg') ");
 		// EOF item_db
 				
 		// BOF item_category 
@@ -53,7 +53,7 @@ class Migration_Install_simplenews extends Migration {
 		$this->dbforge->add_key('id', true);
 		$this->dbforge->create_table('news_default_checkboxes');
 
-		$this->db->query("INSERT INTO {$prefix}news_default_checkboxes VALUES(1, 'newscheckboxes 1, newscheckboxes 2, newscheckboxes 3')");
+		$this->db->query("INSERT INTO {$prefix}news_default_checkboxes VALUES(1, 'options 1||options 2||options 3||options 4||options 5')");
 		// EOF Default Checkboxes
 		
 		// BOF Default Checkboxes (Two)
@@ -63,7 +63,7 @@ class Migration_Install_simplenews extends Migration {
 		$this->dbforge->add_key('id', true);
 		$this->dbforge->create_table('news_default_checkboxes_two');
 
-		$this->db->query("INSERT INTO {$prefix}news_default_checkboxes_two VALUES(1, 'newscheckboxes 1, newscheckboxes 2')");
+		$this->db->query("INSERT INTO {$prefix}news_default_checkboxes_two VALUES(1, 'options 1||options 2')");
 		// EOF Default Checkboxes (Two)
 	
 	//--------------------------------------------------------------------
