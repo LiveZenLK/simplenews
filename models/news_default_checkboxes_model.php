@@ -2,7 +2,7 @@
 
 class News_default_checkboxes_model extends BF_Model {
 	
-	protected $table		= "newsc";
+	protected $table		= "news_default_checkboxes";
 	protected $key			= "id";
 	protected $soft_deletes	= false;
 	protected $date_format	= "datetime";

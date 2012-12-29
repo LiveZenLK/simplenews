@@ -10,9 +10,8 @@ class content extends Admin_Controller {
 		$this->load->helper('form');
 		$this->load->model('news_model', null, true);
 		$this->load->model('category_model', null, true);
-		$this->load->model('newsc_model', null, true);
-		
-		
+		$this->load->model('news_default_checkboxes_model', null, true);
+		$this->load->model('news_default_checkboxes_two_model', null, true);
 		Template::set_block('sub_nav', 'content/_sub_nav');
 	}
 	//--------------------------------------------------------------------
@@ -41,9 +40,8 @@ class content extends Admin_Controller {
 	
 	
 	public function editnews() {
-		
 //		$this->auth->restrict('simplenews.Content.Edit');
-
+		
 		$id = $this->uri->segment(5);
 		if (empty($id)){
 			Template::set_message(lang('simplenews_invalid_id'), 'error');
@@ -59,35 +57,25 @@ class content extends Admin_Controller {
 			}
 		}
 		
-//		$boxe = '1';
-		$boxe = $this->newsc_model->find($id);
-		Template::set('newscheckbox', $boxe);
+		$checkboxes = $this->news_default_checkboxes_model->find_all();		
+		Template::set('defaultcheckbox', $checkboxes);
+				
+		$checkboxestwo = $this->news_default_checkboxes_two_model->find_all();
+		Template::set('defaultcheckboxtwo', $checkboxestwo);
 		
-		$category = $this->category_model->find_all();
-		$this->news_model->where('category_id',$id);
+		$category = $this->category_model->find_all();		
 		Template::set('categories', $category);
 		
 		$editnewsdata = $this->news_model->find($id);
-		Template::set('news', $editnewsdata);
-
-//		$c = $this->checkboxes_model->find();
-//		$selectmultiple = $this->news_model->find_by('selectmultiple');
-//		Template::set('selectmultiples', $selectmultiple);
-		
-//		$checkbox = $this->news_model->find('checkbox', $id);
-//		Template::set('checkboxs', $checkbox);
-		
+		Template::set('news', $editnewsdata);		
+	
 		Template::set('toolbar_title', lang('simplenews_edit') . ' Itens');
 		Template::render();
 	}
-	
-	// saving news  
-	// saving news 
-	// saving news 
+	// saving news
 	private function save_news($type='insert', $id=0) {
 		
-		if ($type == 'update') {$_POST['id'] = $id; }
-		
+		if ($type == 'update') {$_POST['id'] = $id; }		
 		$this->form_validation->set_rules('title', 'title', 					'required|trim|max_length[255]|strip_tags|xss_clean');
 		$this->form_validation->set_rules('category_id', 'category_id', 		'numeric|xss_clean');
 		$this->form_validation->set_rules('status', 'status', 					'numeric|xss_clean');
@@ -98,7 +86,7 @@ class content extends Admin_Controller {
 		if ($this->form_validation->run() === FALSE) {
 			return FALSE;
 		}
-		
+				
 		// make sure we only pass in the fields we want
 		$data = array();
 		$data['title']       		= $this->input->post('title');
