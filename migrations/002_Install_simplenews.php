@@ -53,18 +53,8 @@ class Migration_Install_simplenews extends Migration {
 		$this->dbforge->add_key('id', true);
 		$this->dbforge->create_table('news_default_checkboxes');
 
-		$this->db->query("INSERT INTO {$prefix}news_default_checkboxes VALUES(1, 'options 1||options 2||options 3||options 4||options 5')");
+		$this->db->query("INSERT INTO {$prefix}news_default_checkboxes VALUES(1, 'options 1||options 2||options 3||options 4||options 5||options 6||options 7')");
 		// EOF Default Checkboxes
-		
-		// BOF Default Checkboxes (Two)
-		$this->dbforge->add_field('`id` serial NOT NULL');
-		$this->dbforge->add_field('`checkboxes` varchar(225) NOT NULL');
-				
-		$this->dbforge->add_key('id', true);
-		$this->dbforge->create_table('news_default_checkboxes_two');
-
-		$this->db->query("INSERT INTO {$prefix}news_default_checkboxes_two VALUES(1, 'options 1||options 2')");
-		// EOF Default Checkboxes (Two)
 	
 	//--------------------------------------------------------------------
 	}
