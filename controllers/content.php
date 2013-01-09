@@ -94,32 +94,18 @@ class content extends Admin_Controller {
 		$data['status']      		= $this->input->post('status');
 		$data['textarea']     		= $this->input->post('textarea');
 		$data['selectmultiple']     = $this->input->post('selectmultiple');	
-				
-		//$newscheckbox = explode("||",$news['checkbox']);		
-		//$newscheckbox = implode("||",$this->input->post('checkbox'));		
-		//$data['checkbox']       	= $this->input->post('checkbox');
-		
+			
+			
 		//$checkedboxes1 = $this->input->post('checkbox');
 		//$checkedboxes = implode("||",$checkedboxes1);			
 		//$checkedboxes1 = $this->input->post('checkbox');
 				
 		$checkedboxes1 = $this->input->post('checkbox');
 		$checkedboxes = implode("||",$checkedboxes1);
-		$data['checkbox']       	= $checkedboxes;
-		
-		//foreach($split as $s) {
-// 			if($s == 'car') { echo 'Car checkbox here'; }
-		//}		
-		/*
-		for($i=0;$i<$countalldefaultcheckbox;$i++) : 
-		    if(in_array($alldefaultcheckbox[$i],$newscheckbox)) :
-		        echo '<input type="checkbox" name="checkbox" value="'.$alldefaultcheckbox[$i].'" checked="checked" />'.$alldefaultcheckbox[$i].'<br />';
-				//echo 'created_on : ' . $news['created_on'] . '<br />';				
-		    else :
-		        echo '<input type="checkbox" name="checkbox" value="'.$alldefaultcheckbox[$i].'"> '.$alldefaultcheckbox[$i].'<br />';
-			endif;
-		endfor;
-		*/	
+		$data['checkbox']       	= $checkedboxes;	
+			
+
+		// Image Upload 
 		//$data['foto']       		= $this->input->post('foto');		
 		/*
 		$this->load->library('upload', $config);						
