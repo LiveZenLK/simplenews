@@ -94,19 +94,16 @@ class content extends Admin_Controller {
 		$data['status']      		= $this->input->post('status');
 		$data['textarea']     		= $this->input->post('textarea');
 		$data['selectmultiple']     = $this->input->post('selectmultiple');	
-			
-			
-		//$checkedboxes1 = $this->input->post('checkbox');
-		//$checkedboxes = implode("||",$checkedboxes1);			
-		//$checkedboxes1 = $this->input->post('checkbox');
-				
+	
 		$checkedboxes1 = $this->input->post('checkbox');
 		$checkedboxes = implode("||",$checkedboxes1);
 		$data['checkbox']       	= $checkedboxes;	
 			
 
-		// Image Upload 
-		//$data['foto']       		= $this->input->post('foto');		
+		// Image Upload
+		 
+		//$data['foto']       		= $this->input->post('foto');
+				
 		/*
 		$this->load->library('upload', $config);						
 		$config['upload_path'] = realpath( FCPATH.'assets/images/');
