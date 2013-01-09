@@ -40,22 +40,20 @@ if( isset($news) ) { $news = (array)$news; }
 //			echo '<br />';
 //			echo 'Modified On :' . date('l \d\i\a j \d\e F \d\e Y \a\s h:i:s A', strtotime($news['modified_on']));
 //			echo '<br /><br />';
-//			echo 'category_id : ' . $news['category_id'] . '<br /><br />';
-					
-			echo 'title : ' . $news['title'] . '<br />';
-			echo 'category_id : ' . $news['category_id'] . '<br />';
-            echo 'status : ' . $news['status'] . '<br />';
-			echo 'News selected checkboxes : ' . $news['checkbox'] . '<br />';
-			echo '<br />Default Checkboxes : ' . $defaultcheckbox['checkboxes'] . '<br /><br />';			
-	?>
-    </div>
+//			echo 'category_id : ' . $news['category_id'] . '<br /><br />';					
+//			echo 'title : ' . $news['title'] . '<br />';
+//			echo 'category_id : ' . $news['category_id'] . '<br />';
+//          echo 'status : ' . $news['status'] . '<br />';
+//			echo 'News selected checkboxes : ' . $news['checkbox'] . '<br />';
+//			echo '<br />Default Checkboxes : ' . $defaultcheckbox['checkboxes'] . '<br /><br />';			
+		?>
+    	</div>
+    <?php echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>
     
-	
-	<?php echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>
     <fieldset>
-    <div class="form-actions">
+	<div class="form-actions">
 	<input type="hidden" id="" name="id" value="<?php echo set_value('id', isset($news['id']) ? $news['id'] : ''); ?>"  />
-
+	
     <!-- BOF Title -->     
     <div class="control-group">
 	    <label class="control-label">Titulo</label>
@@ -110,12 +108,38 @@ if( isset($news) ) { $news = (array)$news; }
     <input type="hidden" id="" name="selectmultiple" value="<?php echo set_value('selectmultiple', isset($news['selectmultiple']) ? $news['selectmultiple'] : ''); ?>"  />
     <!-- EOF SELECT MULTIPLE  -->
         
-    <!-- BOF POPULATE CHECKBOXes -->
+    <!-- BOF POPULATE CHECKBOXes ;) -->
     <div class="control-group">
 		<label class="control-label">Checkbox</label>
 		<div class="controls">
-		<?php
-		/*	$options = array(
+		<?php		
+		
+		$alldefaultcheckbox = explode("||",$defaultcheckbox['checkboxes']); //make it array using explode		
+		$newscheckbox = explode("||",$news['checkbox']); //make it array using explode		
+		$countalldefaultcheckbox = count($alldefaultcheckbox); 
+		
+		for($i=0;$i<$countalldefaultcheckbox;$i++) : 
+		    if(in_array($alldefaultcheckbox[$i],$newscheckbox)) :
+		        echo '<input type="checkbox" name="checkbox" value="'.$alldefaultcheckbox[$i].'" checked="checked" />'.$alldefaultcheckbox[$i].'<br />';
+				//echo 'created_on : ' . $news['created_on'] . '<br />';				
+		    else :
+		        echo '<input type="checkbox" name="checkbox" value="'.$alldefaultcheckbox[$i].'"> '.$alldefaultcheckbox[$i].'<br />';
+			endif;
+		endfor;		
+		//echo form_multiselect('Multi-Select', $alldefaultcheckbox, $newscheckbox); // not working
+		//echo form_checkbox('checkbox', $alldefaultcheckbox, $newscheckbox); // not working			
+		?>        	
+		</div>
+	</div>
+	<!-- EOF POPULATE CHECKBOXes -->
+	
+	<!-- BOF POPULATE Form_multiselect -->
+    <div class="control-group">
+		<label class="control-label">Form_multiselect (uncoment the code)</label>
+		<div class="controls">
+		<?php		
+		/*
+			$options = array(
 				'small'  => 'Small Shirt',
 				'med'    => 'Medium Shirt',
 		        'large'   => 'Large Shirt',
@@ -123,37 +147,27 @@ if( isset($news) ) { $news = (array)$news; }
 			);
 			$shirts_on_sale = array('small', 'large');
 			echo form_multiselect('shirts', $options, $shirts_on_sale);
-		*/
-		//$allregion1 = $defaultcheckbox['checkboxes'];
-		$allregion = explode("||",$defaultcheckbox['checkboxes']);//make it array using explode
-		
-		$region = $news['checkbox'];
-		$region_explode = explode("||",$news['checkbox']); //make it array using explode	
-		
-		$arr_size=count($allregion); 
-		for($i=0;$i<$arr_size;$i++) : 
-		    if(in_array($allregion[$i],$region_explode)) :
-		        echo '<input type="checkbox" name="region" value="'.$allregion[$i].'" checked="checked" />'.$allregion[$i].'<br />';
-				//echo 'created_on : ' . $news['created_on'] . '<br />';				
-		    else :
-		        echo '<input type="checkbox" name="region" value="'.$allregion[$i].'"> '.$allregion[$i].'<br />';
-			endif;
-		endfor;
-		?>        	
+		 // echo form_checkbox('shirts', $options, $shirts_on_sale); // not working
+		 */
+				
+		?>
 		</div>
-	</div>
-	<!-- EOF POPULATE CHECKBOXes -->
+	</div>	
 	
-	<!-- BOF IMAGE -->
-	<input id="foto" type="file" name="foto" maxlength="1000" value="
-	<?php echo set_value('foto', isset($news['foto']) ? $news['foto'] : ''); ?>"  />
+	<!-- BOF IMAGE 
+	<input id="foto" type="file" name="foto" maxlength="1000" value="" />
+	<input id="foto" type="file" name="foto" maxlength="1000" value="" />
+	-->
+	<?php // echo form_label("foto","userfile"); ?>
+	<input type="file" id="foto" name="foto" />
 	<br/><br/>
 	<!-- EOF IMAGE -->
 	
 	<input type="submit" name="submit" class="btn btn-primary" value="Save" />
 	<?php echo lang('simplenews_or'); ?> <?php echo anchor(SITE_AREA .'/content/simplenews/', lang('simplenews_cancel'), 'class="btn btn-warning"'); ?>
 	</div>
-    
-    </fieldset>
+	
+	</fieldset>
     <?php echo form_close(); ?>
+    
 </div>

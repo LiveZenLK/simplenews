@@ -12,7 +12,7 @@ class content extends Admin_Controller {
 		$this->load->model('news_model', null, true);
 		$this->load->model('category_model', null, true);
 		$this->load->model('news_default_checkboxes_model', null, true);
-		$this->load->model('news_default_checkboxes_two_model', null, true);
+		//$this->load->model('news_default_checkboxes_two_model', null, true);
 		
 		Template::set_block('sub_nav', 'content/_sub_nav');
 	}
@@ -68,9 +68,7 @@ class content extends Admin_Controller {
 		$checkboxes = $this->news_default_checkboxes_model->find(1);		
 		Template::set('defaultcheckbox', $checkboxes);
 				
-		$checkboxestwo = $this->news_default_checkboxes_two_model->find(1);
-		Template::set('defaultcheckboxtwo', $checkboxestwo);
-		
+				
 	
 		Template::set('toolbar_title', lang('simplenews_edit') . ' Itens');
 		Template::render();
@@ -85,10 +83,9 @@ class content extends Admin_Controller {
 		$this->form_validation->set_rules('textarea', 'textarea', 				'required|trim|max_length[255]|strip_tags|xss_clean');
 		$this->form_validation->set_rules('selectmultiple', 'selectmultiple', 	'required|trim|max_length[255]|strip_tags|xss_clean');
 		$this->form_validation->set_rules('checkbox', 'checkbox', 				'required|trim|max_length[255]|strip_tags|xss_clean');
+		//$this->form_validation->set_rules('foto', 'foto', 				'required|trim|max_length[255]|strip_tags|xss_clean');
 		
-		if ($this->form_validation->run() === FALSE) {
-			return FALSE;
-		}
+		if ($this->form_validation->run() === FALSE) {return FALSE;}
 				
 		// make sure we only pass in the fields we want
 		$data = array();
@@ -96,9 +93,42 @@ class content extends Admin_Controller {
 		$data['category_id'] 	    = $this->input->post('category_id');
 		$data['status']      		= $this->input->post('status');
 		$data['textarea']     		= $this->input->post('textarea');
-		$data['selectmultiple']     = $this->input->post('selectmultiple');
-		$data['checkbox']       	= $this->input->post('checkbox');
+		$data['selectmultiple']     = $this->input->post('selectmultiple');	
+				
+		//$newscheckbox = explode("||",$news['checkbox']);		
+		//$newscheckbox = implode("||",$this->input->post('checkbox'));		
+		//$data['checkbox']       	= $this->input->post('checkbox');
+		
+		//$checkedboxes1 = $this->input->post('checkbox');
+		//$checkedboxes = implode("||",$checkedboxes1);			
+		//$checkedboxes1 = $this->input->post('checkbox');
+				
+		$checkedboxes1 = $this->input->post('checkbox');
+		$checkedboxes = implode("||",$checkedboxes1);
+		$data['checkbox']       	= $checkedboxes;
+		
+		//foreach($split as $s) {
+// 			if($s == 'car') { echo 'Car checkbox here'; }
+		//}		
 		/*
+		for($i=0;$i<$countalldefaultcheckbox;$i++) : 
+		    if(in_array($alldefaultcheckbox[$i],$newscheckbox)) :
+		        echo '<input type="checkbox" name="checkbox" value="'.$alldefaultcheckbox[$i].'" checked="checked" />'.$alldefaultcheckbox[$i].'<br />';
+				//echo 'created_on : ' . $news['created_on'] . '<br />';				
+		    else :
+		        echo '<input type="checkbox" name="checkbox" value="'.$alldefaultcheckbox[$i].'"> '.$alldefaultcheckbox[$i].'<br />';
+			endif;
+		endfor;
+		*/	
+		//$data['foto']       		= $this->input->post('foto');		
+		/*
+		$this->load->library('upload', $config);						
+		$config['upload_path'] = realpath( FCPATH.'assets/images/');
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size'] = '0';
+		$config['max_width'] = '0';
+		$config['max_height'] = '0';
+		
 		if ( ! $this->upload->do_upload('foto')) {
 			$this->error = $this->upload->display_errors();
 			return FALSE;
@@ -106,13 +136,8 @@ class content extends Admin_Controller {
          $img_data = $this->upload->data();
          $data['foto'] = $img_data['foto']; 
 		}
-		$config['upload_path'] = realpath( FCPATH.'assets/images/');
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size'] = '0';
-		$config['max_width'] = '0';
-		$config['max_height'] = '0';
-		$this->load->library('upload', $config);
 		*/
+		
 		if ($type == 'insert')
 		{
 			$id = $this->news_model->insert($data);
