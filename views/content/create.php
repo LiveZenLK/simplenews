@@ -1,52 +1,13 @@
 <?php if (validation_errors()) : ?>
 <div class="alert alert-block alert-error fade in ">
   <a class="close" data-dismiss="alert">&times;</a>
-  <h4 class="alert-heading"><?php echo lang('catalogsys_fix_the_following_errors'); ?></h4>
+  <h4 class="alert-heading"><?php echo lang('simplenews_fix_the_following_errors'); ?></h4>
  <?php echo validation_errors(); ?>
 </div>
 <?php endif; ?>
 
-<?php // Change the css classes to suit your needs
-if( isset($news) ) { $news = (array)$news; }
-	$id = isset($news['id']) ? $news['id'] : '';
-?>
-<?php // Change the css classes to suit your needs
-	if( isset($categories) ) { $categories = (array)$categories; }
-	$id = isset($categories['id']) ? $categories['id'] : '';
-?>
-<?php // Change the css classes to suit your needs
-	if( isset($defaultcheckbox) ) { $defaultcheckbox = (array)$defaultcheckbox; }
-//	$id = isset($defaultcheckbox['id']) ? $defaultcheckbox['id'] : '';
-?>
-<?php // Change the css classes to suit your needs
-//if( isset($defaultcheckboxtwo) ) { $defaultcheckboxtwo = (array)$defaultcheckboxtwo; }
-//	$id = isset($defaultcheckboxtwo['id']) ? $defaultcheckboxtwo['id'] : '';
-?>
-
 <div class="admin-box">	
-    	<div style="float:left; width:100%;">
-		<?php
-//			$datee = "Dia: %d Mês: %m Ano: %Y - %h:%i %a";
-//			$time = time();
-//			echo date($datee, $time);			
-// 			Display the data of news.
-//			echo 'created_on : ' . $news['created_on'] . '<br />';			
-//			echo 'modified_on : ' . $news['modified_on'] . '<br />';
-//			echo date('j M Y g:i A', strtotime($news['created_on']) );
-//			echo date('j M Y g:i A', strtotime($news['modified_on']) );
-//			echo date('Y-m-j_His', strtotime($news['modified_on']) );	
-//			echo 'Created On  : ' . date('l \d\i\a j \d\e F \d\e Y \a\s h:i:s A', strtotime($news['created_on']));
-//			echo '<br />';
-//			echo 'Modified On :' . date('l \d\i\a j \d\e F \d\e Y \a\s h:i:s A', strtotime($news['modified_on']));
-//			echo '<br /><br />';
-//			echo 'category_id : ' . $news['category_id'] . '<br /><br />';					
-//			echo 'title : ' . $news['title'] . '<br />';
-//			echo 'category_id : ' . $news['category_id'] . '<br />';
-//          echo 'status : ' . $news['status'] . '<br />';
-//			echo 'News selected checkboxes : ' . $news['checkbox'] . '<br />';
-//			echo '<br />Default Checkboxes : ' . $defaultcheckbox['checkboxes'] . '<br /><br />';			
-		?>
-    	</div>
+    	
     <?php //echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>
     <?php echo form_open(current_url(), 'class="form-horizontal"'); ?>
     
@@ -156,7 +117,7 @@ if( isset($news) ) { $news = (array)$news; }
 		?>
 		</div>
 	</div>
-	
+		
 	<input type="submit" name="submit" class="btn btn-primary" value="Save" />
 	<?php echo anchor(SITE_AREA .'/content/simplenews/', lang('simplenews_cancel'), 'class="btn btn-warning"'); ?>
 	</div>

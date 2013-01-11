@@ -24,6 +24,8 @@ $lang['simplenews_cancel']					= 'Cancel';
 $lang['simplenews_delete_record']			= 'Delete this simplenews';
 $lang['simplenews_delete_confirm']			= 'Are you sure you want to delete this simplenews?';
 $lang['simplenews_edit_heading']			= 'Edit simplenews';
+$lang['simplenews_fix_the_following_errors']			= 'fix the following errors';
+
 
 // Activities
 $lang['simplenews_act_create_record']		= 'Created record with ID';
