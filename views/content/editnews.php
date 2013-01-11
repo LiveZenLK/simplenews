@@ -51,7 +51,7 @@ if( isset($news) ) { $news = (array)$news; }
     
     <fieldset>
 	<div class="form-actions">
-	<input type="hidden" id="" name="id" value="<?php echo set_value('id', isset($news['id']) ? $news['id'] : ''); ?>"  />
+	<input type="hidden" id="" name="id" value="<?php echo set_value('id', isset($news['id']) ? $news['id'] : ''); ?>" />
 	
     <!-- BOF Title -->     
     <div class="control-group">

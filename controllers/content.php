@@ -74,32 +74,30 @@ class content extends Admin_Controller {
 	public function create()
 	{
 		$this->auth->restrict('Simplenews.Content.Create');
-		Assets::add_module_js('simplenews', 'simplenews.js');
+		//Assets::add_module_js('simplenews', 'simplenews.js');
 		
-		/*if ($this->input->post('submit')) {
+		if ($this->input->post('submit')) {
 			if ($this->save_news('insert')) {
 				// Log the activity
 				$this->activity_model->log_activity($this->current_user->id, lang('simplenews_act_edit_record').': ' . $id . ' : ' . $this->input->ip_address(), 'simplenews');
 				Template::set_message(lang('simplenews_edit_success'), 'success');
+				//Template::redirect(SITE_AREA .'/content/simplenews');
 			} else {
 				Template::set_message(lang('simplenews_edit_failure') . $this->fields_model->error, 'error');
 			}
-		}*/
-
-		if ($this->input->post('submit')){
-			if ($insert_id = $this->save_news())
-			{
+		}
+		/*
+		if ($this->input->post('submit')) {
+			if ($this->save_news()) {
 				// Log the activity
 				$this->activity_model->log_activity($this->current_user->id, lang('simplenews_act_edit_record').': ' . $id . ' : ' . $this->input->ip_address(), 'simplenews');
 				Template::set_message(lang('simplenews_edit_success'), 'success');
-				
-				Template::redirect(SITE_AREA .'/content/simplenews');
-			}
-			else 
-			{
+				//Template::redirect(SITE_AREA .'/content/simplenews');
+			} else {
 				Template::set_message(lang('simplenews_edit_failure') . $this->fields_model->error, 'error');
 			}
 		}
+		*/
 				
 		$category = $this->category_model->find_all();
 		Template::set('categories', $category);
