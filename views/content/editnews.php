@@ -23,8 +23,7 @@ if( isset($news) ) { $news = (array)$news; }
 //	$id = isset($defaultcheckboxtwo['id']) ? $defaultcheckboxtwo['id'] : '';
 ?>
 
-<div class="admin-box">
-	<h3><?php echo lang('edit')?></h3>
+<div class="admin-box">	
     	<div style="float:left; width:100%;">
 		<?php
 //			$datee = "Dia: %d Mês: %m Ano: %Y - %h:%i %a";
@@ -66,11 +65,12 @@ if( isset($news) ) { $news = (array)$news; }
     <!-- BOF CATEGORIES form_dropdown -->
     <!-- Using 'form_dropdown' to load the actual category of a news  -->
     <div class="control-group">
-	<?php // echo form_label('Category', 'category_id'); ?>
-    	<label class="control-label">Category</label>
-		<?php foreach ($categories as $category) : ?>
-			<?php $array[$category->id] = $category->category_name; ?>
-		<?php endforeach; ?>
+		<label class="control-label">Category</label>
+		<?php
+		foreach ($categories as $category) : 
+		$array[$category->id] = $category->category_name;
+		endforeach;
+		?>
 		<?php echo form_dropdown('category_id', $array, $news['category_id']); ?>
 	</div>
 	<!-- EOF CATEGORIES form_dropdown -->
@@ -102,28 +102,24 @@ if( isset($news) ) { $news = (array)$news; }
 		<?php echo form_textarea('textarea', isset($news['textarea']) ? $news['textarea'] : ''); ?>
         </div>
 	</div>   
-    <!-- EOF STATUS form_textarea -->  
-
-    <!-- BOF SELECT MULTIPLE  -->      
-    <input type="hidden" id="" name="selectmultiple" value="<?php echo set_value('selectmultiple', isset($news['selectmultiple']) ? $news['selectmultiple'] : ''); ?>"  />
-    <!-- EOF SELECT MULTIPLE  -->
+    <!-- EOF STATUS form_textarea -->    
         
     <!-- BOF POPULATE CHECKBOXes ;) -->
     <div class="control-group">
 		<label class="control-label">Checkbox</label>
 		<div class="controls">
-		<?php		
+		<?php
 		
 		$alldefaultcheckbox = explode("||",$defaultcheckbox['checkboxes']); //make it array using explode		
 		$newscheckbox = explode("||",$news['checkbox']); //make it array using explode		
-		$countalldefaultcheckbox = count($alldefaultcheckbox); 
-		
+		$countalldefaultcheckbox = count($alldefaultcheckbox);
+				
 		for($i=0;$i<$countalldefaultcheckbox;$i++) : 
 		    if(in_array($alldefaultcheckbox[$i],$newscheckbox)) :
-		        echo '<input type="checkbox" name="checkbox" value="'.$alldefaultcheckbox[$i].'" checked="checked" />'.$alldefaultcheckbox[$i].'<br />';
+		        echo '<input type="checkbox" name="checkbox[]" value="'.$alldefaultcheckbox[$i].'" checked="checked" />'.$alldefaultcheckbox[$i].'<br />';
 				//echo 'created_on : ' . $news['created_on'] . '<br />';				
 		    else :
-		        echo '<input type="checkbox" name="checkbox" value="'.$alldefaultcheckbox[$i].'"> '.$alldefaultcheckbox[$i].'<br />';
+		        echo '<input type="checkbox" name="checkbox[]" value="'.$alldefaultcheckbox[$i].'"> '.$alldefaultcheckbox[$i].'<br />';
 			endif;
 		endfor;		
 		//echo form_multiselect('Multi-Select', $alldefaultcheckbox, $newscheckbox); // not working
@@ -146,10 +142,10 @@ if( isset($news) ) { $news = (array)$news; }
 		        'xlarge' => 'Extra Large Shirt',
 			);
 			$shirts_on_sale = array('small', 'large');
-			echo form_multiselect('shirts', $options, $shirts_on_sale);
+			echo form_multiselect('shirts', $options, $shirts_on_sale);		 
 		 // echo form_checkbox('shirts', $options, $shirts_on_sale); // not working
-		 */
-				
+		 	echo form_multiselect('shirts', $alldefaultcheckbox, $newscheckbox);
+		 */		
 		?>
 		</div>
 	</div>	
@@ -163,8 +159,10 @@ if( isset($news) ) { $news = (array)$news; }
 	<br/><br/>
 	<!-- EOF IMAGE -->
 	
+	
+	
 	<input type="submit" name="submit" class="btn btn-primary" value="Save" />
-	<?php echo lang('simplenews_or'); ?> <?php echo anchor(SITE_AREA .'/content/simplenews/', lang('simplenews_cancel'), 'class="btn btn-warning"'); ?>
+	<?php echo anchor(SITE_AREA .'/content/simplenews/', lang('simplenews_cancel'), 'class="btn btn-warning"'); ?>
 	</div>
 	
 	</fieldset>

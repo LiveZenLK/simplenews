@@ -1,45 +1,73 @@
 <div class="admin-box">
-	<h3>simplenews</h3>
-	<?php echo form_open($this->uri->uri_string()); ?>
-		<table class="table table-striped">
+
+<!-- BOF 
+	<div class="box select admin-box">
+		-->
+		<?php
+		/*
+			echo form_open(SITE_AREA . '/reports/activities/' . $vars['which'], 'class="form-horizontal constrained"');
+
+			$form_help = '<span class="help-inline">' . sprintf(lang('activity_filter_note'),($vars['view_which'] == ucwords(lang('activity_date')) ? 'from before':'only for'),strtolower($vars['view_which'])) . '</span>';
+			$form_data = array('name' => $vars['which'].'_select', 'id' => $vars['which'].'_select', 'class' => 'span3' );
+			echo form_dropdown($form_data, $select_options, $filter, lang('activity_filter_head') , '' , $form_help);
+			//echo form_dropdown("activity_select", $select_options, $filter,array('id' => 'activity_select', 'class' => 'span4' ) );
+			unset ( $form_data, $form_help);		 
+		 */
+		?>
+		<!-- BOF 		
+	</div>	
+	<br/>	
+	<h2><?php //echo sprintf(lang('activity_view'),($vars['view_which'] == ucwords(lang('activity_date')) ? $vars['view_which'] . ' before' : $vars['view_which']),$vars['name']); ?></h2>
+	-->
+
+	<?php if (!isset($news) || empty($news)) : ?>
+	<div class="alert alert-error fade in">
+		<a class="close" data-dismiss="alert">&times;</a>
+		<h4 class="alert-heading"><?php echo lang('activity_not_found'); ?></h4>
+	</div>
+	<?php else : ?>
+
+	<div id="user_activities">
+		<table class="table table-striped table-bordered" id="flex_table">
 			<thead>
-				<tr>
-					<?php if ($this->auth->has_permission('Simplenews.Content.Delete') && isset($records) && is_array($records) && count($records)) : ?>
-					<th class="column-check"><input class="check-all" type="checkbox" /></th>
-					<?php endif;?>
-					
+				<tr>					
+					<th><?php echo lang('simplenews_actions'); ?></th>					
+					<th><?php echo lang('simplenews_title'); ?></th>
+					<th><?php echo lang('simplenews_category'); ?></th>					
+					<th><?php echo lang('simplenews_creation_date'); ?></th>
 				</tr>
 			</thead>
-			<?php if (isset($records) && is_array($records) && count($records)) : ?>
-			<tfoot>
-				<?php if ($this->auth->has_permission('Simplenews.Content.Delete')) : ?>
-				<tr>
-					<td colspan="1">
-						<?php echo lang('bf_with_selected') ?>
-						<input type="submit" name="delete" id="delete-me" class="btn btn-danger" value="<?php echo lang('bf_action_delete') ?>" onclick="return confirm('<?php echo lang('simplenews_delete_confirm'); ?>')">
-					</td>
-				</tr>
-				<?php endif;?>
-			</tfoot>
-			<?php endif; ?>
+
+			<tfoot></tfoot>
+
 			<tbody>
-			<?php if (isset($records) && is_array($records) && count($records)) : ?>
-			<?php foreach ($records as $record) : ?>
-				<tr>
-					<?php if ($this->auth->has_permission('Simplenews.Content.Delete')) : ?>
-					<td><input type="checkbox" name="checked[]" value="<?php echo $record->id ?>" /></td>
-					<?php endif;?>
+				<?php foreach ($news as $new) : ?>
+				<tr>					
+					<td>
+						<?php 
+						if ($new->status == 1) : 
+							echo 
+							'<span class="label label-success">' 
+								. lang('simplenews_active') . 
+							'</span>
+							<a href="'. site_url(SITE_AREA .'/content/simplenews/editnews/' . $new->id) . '">Edit</a>' ;																				 
+						else:
+							echo '<span class="label label-warning">' . lang('simplenews_inactive') . '</span>
+							<a href="' . site_url(SITE_AREA .'/content/simplenews/editnews/' . $new->id) . '">Edit</a>' ;;
+						endif;
+					 	?>
+					</td>					
+					<td><?php echo $new->title; ?></td>
+					<td><?php echo $new->category_id; ?></td>
 					
+						
+					<td><?php echo date('M j, Y g:i A', strtotime($new->created_on)); ?></td>
 				</tr>
-			<?php endforeach; ?>
-			<?php else: ?>
-				<tr>
-					<td colspan="1">No records found that match your selection.</td>
-					<?php echo anchor(SITE_AREA .'/content/simplenews/editnews/1', lang('simplenews_post1'), 'class="btn btn-warning"'); ?>
-                    <?php echo anchor(SITE_AREA .'/content/simplenews/editnews/2', lang('simplenews_post2'), 'class="btn btn-warning"'); ?>
-				</tr>
-			<?php endif; ?>
+				<?php endforeach; ?>
 			</tbody>
 		</table>
-	<?php echo form_close(); ?>
-</div>
+	</div>
+
+	<?php echo $this->pagination->create_links(); ?>
+	<?php endif; ?>
+
