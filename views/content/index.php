@@ -1,6 +1,6 @@
 <div class="admin-box">
 
-<!-- BOF 
+<!-- BO
 	<div class="box select admin-box">
 		-->
 		<?php
@@ -14,7 +14,7 @@
 			unset ( $form_data, $form_help);		 
 		 */
 		?>
-		<!-- BOF 		
+		<!-- BO
 	</div>	
 	<br/>	
 	<h2><?php //echo sprintf(lang('activity_view'),($vars['view_which'] == ucwords(lang('activity_date')) ? $vars['view_which'] . ' before' : $vars['view_which']),$vars['name']); ?></h2>
@@ -33,13 +33,12 @@
 				<tr>					
 					<th><?php echo lang('simplenews_actions'); ?></th>					
 					<th><?php echo lang('simplenews_title'); ?></th>
-					<th><?php echo lang('simplenews_category'); ?></th>					
+					<th><?php echo lang('simplenews_category'); ?></th>
 					<th><?php echo lang('simplenews_creation_date'); ?></th>
+					<th><?php echo lang('simplenews_modified_date'); ?></th>
 				</tr>
 			</thead>
-
 			<tfoot></tfoot>
-
 			<tbody>
 				<?php foreach ($news as $new) : ?>
 				<tr>					
@@ -56,12 +55,11 @@
 							<a href="' . site_url(SITE_AREA .'/content/simplenews/editnews/' . $new->id) . '">Edit</a>' ;;
 						endif;
 					 	?>
-					</td>					
+					</td>
 					<td><?php echo $new->title; ?></td>
-					<td><?php echo $new->category_id; ?></td>
-					
-						
+					<td><?php echo $new->category_id; ?></td>						
 					<td><?php echo date('M j, Y g:i A', strtotime($new->created_on)); ?></td>
+					<td><?php echo date('M j, Y g:i A', strtotime($new->modified_on)); ?></td>
 				</tr>
 				<?php endforeach; ?>
 			</tbody>

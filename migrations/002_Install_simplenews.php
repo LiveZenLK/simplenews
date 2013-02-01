@@ -7,14 +7,14 @@ class Migration_Install_simplenews extends Migration {
 		$prefix = $this->db->dbprefix;
 				
 		// BOF item_db  
-		$this->dbforge->add_field('`id` serial NOT NULL');				
+		$this->dbforge->add_field('`id` serial NOT NULL');
 		$this->dbforge->add_field('`created_on` DATETIME NOT NULL');
 		$this->dbforge->add_field('`modified_on` DATETIME NOT NULL');
 		$this->dbforge->add_field('`title` TEXT NOT NULL');
 		$this->dbforge->add_field('`category_id` int(4) NOT NULL');
 		$this->dbforge->add_field('`status` int(4) NOT NULL');
-		$this->dbforge->add_field('`textarea` TEXT NOT NULL');		
-		$this->dbforge->add_field('`checkbox` varchar(225) NOT NULL');		
+		$this->dbforge->add_field('`textarea` TEXT NOT NULL');
+		$this->dbforge->add_field('`checkbox` varchar(225) NOT NULL');
 		
 		$this->dbforge->add_key('id', true);
 		$this->dbforge->create_table('news');
@@ -34,7 +34,7 @@ class Migration_Install_simplenews extends Migration {
 		// BOF item_category 
 		$this->dbforge->add_field('`id` serial NOT NULL');
 		$this->dbforge->add_field('`category_order` TEXT NOT NULL');
-		$this->dbforge->add_field('`category_name` TEXT NOT NULL');		
+		$this->dbforge->add_field('`category_name` TEXT NOT NULL');
 		$this->dbforge->add_field('`category_image` varchar(45) NOT NULL');
 						
 		$this->dbforge->add_key('id', true);
@@ -62,7 +62,7 @@ class Migration_Install_simplenews extends Migration {
 		$this->dbforge->add_field('`image_newsid` int(4) NOT NULL');
 		$this->dbforge->add_field('`image_order` int(4) NOT NULL');
 		$this->dbforge->add_field('`image_title` TEXT NOT NULL');
-		$this->dbforge->add_field('`image_description` TEXT NOT NULL');		
+		$this->dbforge->add_field('`image_description` TEXT NOT NULL');
 		$this->dbforge->add_field('`image_file` varchar(45) NOT NULL');
 				
 		$this->dbforge->add_key('id', true);

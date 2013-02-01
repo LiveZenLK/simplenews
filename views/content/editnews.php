@@ -47,22 +47,23 @@ if( isset($news) ) { $news = (array)$news; }
 //			echo '<br />Default Checkboxes : ' . $defaultcheckbox['checkboxes'] . '<br /><br />';			
 		?>
     	</div>
+    
     <?php echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>
     
     <fieldset>
 	<div class="form-actions">
 	<input type="hidden" id="" name="id" value="<?php echo set_value('id', isset($news['id']) ? $news['id'] : ''); ?>" />
 	
-    <!-- BOF Title -->     
+    <!-- BO Title -->     
     <div class="control-group">
 	    <label class="control-label">Titulo</label>
         <div class="controls">
 		<?php echo form_input('title', isset($news['title']) ? $news['title'] : ''); ?>
         </div>
 	</div>
-	<!-- EOF Title -->
-    
-    <!-- BOF CATEGORIES form_dropdown -->
+	<!-- EO Title -->
+	
+	<!-- BO CATEGORIES form_dropdown -->
     <!-- Using 'form_dropdown' to load the actual category of a news  -->
     <div class="control-group">
 		<label class="control-label">Category</label>
@@ -73,9 +74,11 @@ if( isset($news) ) { $news = (array)$news; }
 		?>
 		<?php echo form_dropdown('category_id', $array, $news['category_id']); ?>
 	</div>
-	<!-- EOF CATEGORIES form_dropdown -->
+	<!-- EO CATEGORIES form_dropdown -->
+	
+	<input type="hidden" name="modified_on" value="<?php $datestring = "%Y-%m-%d %H:%i:%s"; $time = time(); echo mdate($datestring, $time); ?>" /><br />	
     
-    <!-- BOF STATUS set_radio -->
+    <!-- BO STATUS set_radio -->
     <!-- Using 'set_radio' to load the status to create a check box options -->
     <div class="control-group">
 	    <label class="control-label">Status (with radio)</label>
@@ -93,18 +96,18 @@ if( isset($news) ) { $news = (array)$news; }
 			</label>
 		</div>
 	</div>
-    <!-- EOF STATUS set_radio -->
+    <!-- EO STATUS set_radio -->
     
-    <!-- BOF STATUS form_textarea -->
+    <!-- BO STATUS form_textarea -->
     <div class="control-group">
 	    <label class="control-label">Textarea</label>
         <div class="controls">
 		<?php echo form_textarea('textarea', isset($news['textarea']) ? $news['textarea'] : ''); ?>
         </div>
 	</div>   
-    <!-- EOF STATUS form_textarea -->    
+    <!-- EO STATUS form_textarea -->    
         
-    <!-- BOF POPULATE CHECKBOXes ;) -->
+    <!-- BO POPULATE CHECKBOXes ;) -->
     <div class="control-group">
 		<label class="control-label">Checkbox</label>
 		<div class="controls">
@@ -113,7 +116,7 @@ if( isset($news) ) { $news = (array)$news; }
 		$alldefaultcheckbox = explode("||",$defaultcheckbox['checkboxes']); //make it array using explode		
 		$newscheckbox = explode("||",$news['checkbox']); //make it array using explode		
 		$countalldefaultcheckbox = count($alldefaultcheckbox);
-				
+
 		for($i=0;$i<$countalldefaultcheckbox;$i++) : 
 		    if(in_array($alldefaultcheckbox[$i],$newscheckbox)) :
 		        echo '<input type="checkbox" name="checkbox[]" value="'.$alldefaultcheckbox[$i].'" checked="checked" />'.$alldefaultcheckbox[$i].'<br />';
@@ -127,9 +130,9 @@ if( isset($news) ) { $news = (array)$news; }
 		?>        	
 		</div>
 	</div>
-	<!-- EOF POPULATE CHECKBOXes -->
+	<!-- EO POPULATE CHECKBOXes -->
 	
-	<!-- BOF POPULATE Form_multiselect -->
+	<!-- BO POPULATE Form_multiselect -->
     <div class="control-group">
 		<label class="control-label">Form_multiselect (uncoment the code)</label>
 		<div class="controls">
@@ -150,22 +153,22 @@ if( isset($news) ) { $news = (array)$news; }
 		</div>
 	</div>	
 	
-	<!-- BOF IMAGE 
+	<!-- BO IMAGE 
 	<input id="foto" type="file" name="foto" maxlength="1000" value="" />
 	<input id="foto" type="file" name="foto" maxlength="1000" value="" />
 	-->
 	<?php // echo form_label("foto","userfile"); ?>
 	<input type="file" id="foto" name="foto" />
 	<br/><br/>
-	<!-- EOF IMAGE -->
-	
-	
+	<!-- EO IMAGE -->
 	
 	<input type="submit" name="submit" class="btn btn-primary" value="Save" />
 	<?php echo anchor(SITE_AREA .'/content/simplenews/', lang('simplenews_cancel'), 'class="btn btn-warning"'); ?>
 	</div>
-	
 	</fieldset>
+	
+	
+		
     <?php echo form_close(); ?>
     
 </div>

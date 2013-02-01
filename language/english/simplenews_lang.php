@@ -5,6 +5,8 @@ $lang['simplenews_edit']					= 'Edit';
 $lang['simplenews_true']					= 'True';
 $lang['simplenews_false']					= 'False';
 $lang['simplenews_create']					= 'Create';
+$lang['simplenews_create_category']			= 'Add Category';
+
 $lang['simplenews_list']					= 'List';
 $lang['simplenews_new']						= 'New';
 $lang['simplenews_edit_text']				= 'Edit this to suit your needs';
@@ -26,7 +28,6 @@ $lang['simplenews_delete_confirm']			= 'Are you sure you want to delete this sim
 $lang['simplenews_edit_heading']			= 'Edit simplenews';
 $lang['simplenews_fix_the_following_errors']			= 'fix the following errors';
 
-
 // Activities
 $lang['simplenews_act_create_record']		= 'Created record with ID';
 $lang['simplenews_act_edit_record']			= 'Updated record with ID';
@@ -38,9 +39,16 @@ $lang['simplenews_category']				= 'Category';
 $lang['simplenews_active']					= 'Active';
 $lang['simplenews_inactive']				= 'Inactive';
 $lang['simplenews_mensage']					= 'Mensage';
-$lang['simplenews_creation_date']			= 'creation_date';
+$lang['simplenews_creation_date']			= 'Creation Date';
+$lang['simplenews_modified_date']			= 'Modified Date';
 $lang['simplenews_title']					= 'Title';
 $lang['simplenews_status']					= 'Status';
+
+// Category
+$lang['simplenews_category_name']			= 'Category Name';
+$lang['simplenews_category_order']			= 'Category Order';
+$lang['simplenews_category_image']			= 'Category Image';
+
 
 
 
