@@ -19,8 +19,11 @@ if( isset($news) ) { $news = (array)$news; }
 //	$id = isset($defaultcheckbox['id']) ? $defaultcheckbox['id'] : '';
 ?>
 <?php // Change the css classes to suit your needs
-//if( isset($defaultcheckboxtwo) ) { $defaultcheckboxtwo = (array)$defaultcheckboxtwo; }
-//	$id = isset($defaultcheckboxtwo['id']) ? $defaultcheckboxtwo['id'] : '';
+	if( isset($img) ) { $img = (array)$img; }
+	$id = isset($img['id']) ? $img['id'] : '';
+?>
+<?php if (isset($images)) { $images = (array)$images; }
+	$id = isset($images['id']) ? $images['id'] : '';
 ?>
 
 <div class="admin-box">	
@@ -49,7 +52,19 @@ if( isset($news) ) { $news = (array)$news; }
 // http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/3
 // http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/109
 			
-		?>
+		?>		
+		
+		<?php foreach ($images as $image) : ?>
+			<?php // echo $image->id; ?>
+			<?php // echo $image->image_newsid; ?>	
+			<?php echo $image->image_file; ?>
+			<?php // echo $image->image_order; ?>
+			<?php // echo $image->image_title; ?>
+			<?php // echo $image->image_description; ?>	
+		<?php endforeach; ?><br />
+		
+		<a href="http://localhost/bonfire/public/index.php/admin/content/simplenews/newsimages/<?php echo $news['id'];?>"/>Upload Images</a><br />	
+		
     	</div>
     
     <?php echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>
@@ -157,22 +172,11 @@ if( isset($news) ) { $news = (array)$news; }
 		</div>
 	</div>	
 	
-	<!-- BO IMAGE 
-	<input id="foto" type="file" name="foto" maxlength="1000" value="" />
-	<input id="foto" type="file" name="foto" maxlength="1000" value="" />
-	-->
-	<?php // echo form_label("foto","userfile"); ?>
-	<input type="file" id="foto" name="foto" />
-	<br/><br/>
-	<!-- EO IMAGE -->
-	
 	<input type="submit" name="submit" class="btn btn-primary" value="Save" />
 	<?php echo anchor(SITE_AREA .'/content/simplenews/', lang('simplenews_cancel'), 'class="btn btn-warning"'); ?>
 	</div>
-	</fieldset>
-	
-	
-		
+	</fieldset>		
     <?php echo form_close(); ?>
+    
     
 </div>

@@ -7,7 +7,7 @@ class Migration_Install_simplenews extends Migration {
 		$prefix = $this->db->dbprefix;
 				
 		// BOF item_db  
-		$this->dbforge->add_field('`id` serial NOT NULL');
+		$this->dbforge->add_field('`id` serial NOT NULL');		
 		$this->dbforge->add_field('`created_on` DATETIME NOT NULL');
 		$this->dbforge->add_field('`modified_on` DATETIME NOT NULL');
 		$this->dbforge->add_field('`title` TEXT NOT NULL');
@@ -79,7 +79,8 @@ class Migration_Install_simplenews extends Migration {
 		
 		$this->db->query("INSERT INTO {$prefix}news_images VALUES(7, 4, 1 , 'Image Title 4', 'Image Description 4', 'image7.gif' )");
 		$this->db->query("INSERT INTO {$prefix}news_images VALUES(8, 4, 2 , 'Image Title 4', 'Image Description 5', 'image8.gif' )");
-		// EOF Default Images				
+		// EOF Default Images
+							
 	
 	//--------------------------------------------------------------------
 	}
