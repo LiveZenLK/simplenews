@@ -44,7 +44,11 @@ if( isset($news) ) { $news = (array)$news; }
 //			echo 'category_id : ' . $news['category_id'] . '<br />';
 //          echo 'status : ' . $news['status'] . '<br />';
 //			echo 'News selected checkboxes : ' . $news['checkbox'] . '<br />';
-//			echo '<br />Default Checkboxes : ' . $defaultcheckbox['checkboxes'] . '<br /><br />';			
+//			echo '<br />Default Checkboxes : ' . $defaultcheckbox['checkboxes'] . '<br /><br />';
+
+// http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/3
+// http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/109
+			
 		?>
     	</div>
     
