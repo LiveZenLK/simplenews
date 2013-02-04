@@ -7,7 +7,8 @@ class Migration_Install_simplenews extends Migration {
 		$prefix = $this->db->dbprefix;
 				
 		// BOF item_db  
-		$this->dbforge->add_field('`id` serial NOT NULL');		
+		//$this->dbforge->add_field('`id` serial NOT NULL');
+		$this->dbforge->add_field('`id` INT(10) NOT NULL AUTO_INCREMENT');		
 		$this->dbforge->add_field('`created_on` DATETIME NOT NULL');
 		$this->dbforge->add_field('`modified_on` DATETIME NOT NULL');
 		$this->dbforge->add_field('`title` TEXT NOT NULL');
@@ -32,7 +33,8 @@ class Migration_Install_simplenews extends Migration {
 		// EOF item_db
 				
 		// BOF item_category 
-		$this->dbforge->add_field('`id` serial NOT NULL');
+		//$this->dbforge->add_field('`id` serial NOT NULL');
+		$this->dbforge->add_field('`id` INT(10) NOT NULL AUTO_INCREMENT');
 		$this->dbforge->add_field('`category_order` TEXT NOT NULL');
 		$this->dbforge->add_field('`category_name` TEXT NOT NULL');
 		$this->dbforge->add_field('`category_image` varchar(45) NOT NULL');
@@ -48,7 +50,8 @@ class Migration_Install_simplenews extends Migration {
 		// EOF item_category
 		
 		// BOF Default Checkboxes
-		$this->dbforge->add_field('`id` serial NOT NULL');
+		//$this->dbforge->add_field('`id` serial NOT NULL');
+		$this->dbforge->add_field('`id` INT(10) NOT NULL AUTO_INCREMENT');
 		$this->dbforge->add_field('`checkboxes` varchar(225) NOT NULL');
 				
 		$this->dbforge->add_key('id', true);
@@ -58,7 +61,7 @@ class Migration_Install_simplenews extends Migration {
 		// EOF Default Checkboxes		
 		
 		// BOF Default Images
-		$this->dbforge->add_field('`id` serial NOT NULL');
+		$this->dbforge->add_field('`id` INT(10) NOT NULL AUTO_INCREMENT');
 		$this->dbforge->add_field('`image_newsid` int(4) NOT NULL');
 		$this->dbforge->add_field('`image_order` int(4) NOT NULL');
 		$this->dbforge->add_field('`image_title` TEXT NOT NULL');

@@ -52,7 +52,7 @@ if( isset($news) ) { $news = (array)$news; }
 // http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/3
 // http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/109
 			
-		?>		
+		?>
 		
 		<?php foreach ($images as $image) : ?>
 			<?php // echo $image->id; ?>

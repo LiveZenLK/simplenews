@@ -53,12 +53,10 @@
 	</div>   
     <!-- EO STATUS form_textarea -->
     
-    <?php echo realpath( FCPATH.'assets/images/');?><br />    
-    <input type="file" name="image_file" size="20" />	
-    
-	<br /><br />
-		
-	<input type="submit" name="submit" class="btn btn-primary" value="insert" />
+    <?php echo realpath( FCPATH.'assets/images/');?><br />
+    <input type="file" name="image_file" size="20" value="" />
+    <br /><br />
+    <input type="submit" name="submit" class="btn btn-primary" value="insert" />
 	
 	<?php echo anchor(SITE_AREA .'/content/simplenews/', lang('simplenews_cancel'), 'class="btn btn-warning"'); ?>
 	</div>

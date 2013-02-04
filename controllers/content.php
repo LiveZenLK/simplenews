@@ -80,12 +80,9 @@ class content extends Admin_Controller {
 			if ($insert_id = $this->save_news())
 			{
 				// Log the activity
-				$this->activity_model->log_activity($this->current_user->id, lang('catalogsys_act_create_record').': ' . $insert_id . ' : ' . $this->input->ip_address(), 'simplenews');
-
-				Template::set_message(lang('simplenews_act_create_record'), 'success');
-
+				//$this->activity_model->log_activity($this->current_user->id, lang('catalogsys_act_create_record').': ' . $insert_id . ' : ' . $this->input->ip_address(), 'simplenews');
+				Template::set_message(lang('simplenews_act_create_record'), 'success');				
 				$id = $this->db->insert_id();
-				
 				Template::redirect(SITE_AREA .'/content/simplenews/editnews/'.$id);
 			}
 			else
@@ -103,6 +100,52 @@ class content extends Admin_Controller {
 		Template::render();
 	}
 	//--------------------------------------------------------------------
+	
+	// saving news
+	private function save_news($type='insert', $id=0) {
+		
+		if ($type == 'update') {$_POST['id'] = $id; }
+				
+		$this->form_validation->set_rules('title', 'title', 					'required|trim|max_length[255]|strip_tags|xss_clean');
+		$this->form_validation->set_rules('category_id', 'category_id', 		'numeric|xss_clean');
+		$this->form_validation->set_rules('status', 'status', 					'numeric|xss_clean');
+		$this->form_validation->set_rules('textarea', 'textarea', 				'required|trim|max_length[255]|strip_tags|xss_clean');		
+		$this->form_validation->set_rules('checkbox', 'checkbox', 				'required|xss_clean');
+				
+		if ($this->form_validation->run() === FALSE) {return FALSE;}
+				
+		// make sure we only pass in the fields we want
+		$data = array();
+		
+		$data['modified_on']     	= $this->input->post('modified_on');
+		//$data['created_on']     	= $this->input->post('created_on');
+								
+		$data['title']       		= $this->input->post('title');
+		$data['category_id'] 	    = $this->input->post('category_id');
+		$data['status']      		= $this->input->post('status');
+		$data['textarea']     		= $this->input->post('textarea');
+				
+		$checkedboxes1 = $this->input->post('checkbox');
+		$checkedboxes = implode("||",$checkedboxes1);
+		$data['checkbox']       	= $checkedboxes;
+		
+		if ($type == 'insert')
+		{
+			$id = $this->news_model->insert($data);
+			if (is_numeric($id))
+			{
+				$return = $id;
+			} else
+			{
+				$return = FALSE;
+			}
+		}
+		else if ($type == 'update')
+		{
+			$return = $this->news_model->update($id, $data);
+		}
+		return $return;
+	}
 	
 	public function editnews() {
 				
@@ -170,10 +213,9 @@ public function newsimages()
 		Template::set('toolbar_title', lang('simplenews_create') . ' simplenews');
 		Template::render();
 	}
-// EO Upload images
+	// EO Upload images
 
-// BO save images
-
+	// BO save images
 	private function save_images($type='insert', $id=0) { 
     // Form validation for the product image isn't really necessary, but we're just going to say that it's required.          
     //$this->form_validation->set_rules('image_file','Product Image','required');
@@ -187,7 +229,7 @@ public function newsimages()
 	$data['image_order']        = $this->input->post('image_order');
 	$data['image_title']        = $this->input->post('image_title');
 	$data['image_description']  = $this->input->post('image_description');
-	$data['image_file']			= $this->input->post('image_file'); 
+	$data['image_file']			= $this->input->post('image_file');
  
     if ($type == 'insert') {
 	// To get our file data, we're calling $this->savenew(); which handles the actual upload.
@@ -200,9 +242,10 @@ public function newsimages()
             $data['image_file'] = $fdata['upload_data']['image_file'];
         } else {
             $data['image_file'] = 'none';
-        }
+        }		
+        
         $id = $this->news_images_model->insert($data);
-		
+				
         if (is_numeric($id)) {
             $return = $id;
         } else {
@@ -228,20 +271,17 @@ public function newsimages()
 	function uploadimages() {		
 		
 		//$config['upload_path'] = './uploads/';
-		$config['upload_path'] = realpath( FCPATH.'assets/images/');
+		$config['upload_path'] = realpath(FCPATH.'assets/images/');
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size']    = '1000';
 		$config['max_width']  = '2024';
-		$config['max_height']  = '268';
+		$config['max_height']  = '2168';
 		$config['remove_spaces'] = TRUE; //Remove spaces from the file name
 		
 		// You can give video formats if you want to upload any video file.
 		$this->load->library('upload', $config);
-
-		// You can give video formats if you want to upload any video file.
-		$this->load->library('upload', $config); 
         if (!$this->upload->do_upload('image_file')) {
-        	$data['error']= array('error' => $this->upload->display_errors());
+        	$data['error'] = array('error' => $this->upload->display_errors());
             log_message('error',$data['error']);
 		}
 		else {
@@ -251,51 +291,7 @@ public function newsimages()
 		
 	}
 		
-	// saving news
-	private function save_news($type='insert', $id=0) {
-		
-		if ($type == 'update') {$_POST['id'] = $id; }
-				
-		$this->form_validation->set_rules('title', 'title', 					'required|trim|max_length[255]|strip_tags|xss_clean');
-		$this->form_validation->set_rules('category_id', 'category_id', 		'numeric|xss_clean');
-		$this->form_validation->set_rules('status', 'status', 					'numeric|xss_clean');
-		$this->form_validation->set_rules('textarea', 'textarea', 				'required|trim|max_length[255]|strip_tags|xss_clean');		
-		$this->form_validation->set_rules('checkbox', 'checkbox', 				'required|xss_clean');
-				
-		if ($this->form_validation->run() === FALSE) {return FALSE;}
-				
-		// make sure we only pass in the fields we want
-		$data = array();
-		//$data['id']     			= $this->input->post('id');
-		$data['modified_on']     	= $this->input->post('modified_on');
-		//$data['created_on']     	= $this->input->post('created_on');
-								
-		$data['title']       		= $this->input->post('title');
-		$data['category_id'] 	    = $this->input->post('category_id');
-		$data['status']      		= $this->input->post('status');
-		$data['textarea']     		= $this->input->post('textarea');
-				
-		$checkedboxes1 = $this->input->post('checkbox');
-		$checkedboxes = implode("||",$checkedboxes1);
-		$data['checkbox']       	= $checkedboxes;
-		
-		if ($type == 'insert')
-		{
-			$id = $this->news_model->insert($data);
-			if (is_numeric($id))
-			{
-				$return = $id;
-			} else
-			{
-				$return = FALSE;
-			}
-		}
-		else if ($type == 'update')
-		{
-			$return = $this->news_model->update($id, $data);
-		}
-		return $return;
-	}
+	
 
 	public function delete()
 	{
@@ -317,8 +313,11 @@ public function newsimages()
 		//Assets::add_module_js('simplenews', 'simplenews.js');
 		if ($this->input->post('submit')) {
 			if ($this->save_category('insert')) {
-				Template::set_message(lang('simplenews_edit_success'), 'success');															
-				Template::redirect(SITE_AREA .'/content/simplenews/createcategory/');
+				Template::set_message(lang('simplenews_edit_success'), 'success');	
+				
+				$id = $this->db->insert_id();																					
+				Template::redirect(SITE_AREA .'/content/simplenews/createcategory/'.$id);
+				
 			} else {
 				Template::set_message(lang('simplenews_edit_failure'), 'error');
 			}

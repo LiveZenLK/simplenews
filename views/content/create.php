@@ -15,10 +15,8 @@
 	<div class="form-actions">
 	
 	<!-- BO Hidden Values -->
-	<input type="hidden" name="id" value="0" /><br />
-	<!-- <input type="hidden" name="created_on" value="" /><br /> -->
-	<!-- <input type="hidden" name="modified_on" value="<?php $datestring = "%Y-%m-%d %H:%i:%s"; $time = time(); echo mdate($datestring, $time);?>" /><br /> -->
-	<input type="hidden" name="created_on" id="" value="<?php echo date('Y-m-j H:i:s'); ?>" />
+	<input type="hidden" name="id" value="" /><br />
+	<!-- <input type="hidden" name="created_on" id="" value="<?php echo date('Y-m-j H:i:s'); ?>" /> -->
     <input type="hidden" name="modified_on" id="" value="<?php echo date('Y-m-j H:i:s'); ?>" />  
 	<!-- EO Hidden Values -->
 		
