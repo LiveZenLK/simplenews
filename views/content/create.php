@@ -9,11 +9,10 @@
 <div class="admin-box">
 	
 	<?php //echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>
-    <?php echo form_open(current_url(), 'class="form-horizontal"'); ?>
-    
+    <?php echo form_open(current_url(), 'class="form-horizontal"'); ?>    
     <fieldset>
 	<div class="form-actions">
-	
+
 	<!-- BO Hidden Values -->
 	<input type="hidden" name="id" value="" /><br />
 	<!-- <input type="hidden" name="created_on" id="" value="<?php echo date('Y-m-j H:i:s'); ?>" /> -->
@@ -35,7 +34,7 @@
 		<label class="control-label">Category</label>
 		<?php
 		foreach ($categories as $category) : 
-		$array[$category->id] = $category->category_name;
+			$array[$category->id] = $category->category_name;
 		endforeach;
 		?>
 		<?php echo form_dropdown('category_id', $array, ''); ?>
@@ -73,9 +72,8 @@
     <div class="control-group">
 		<label class="control-label">Checkbox</label>
 		<div class="controls">
-		<?php
-		
-		$alldefaultcheckbox = explode("||",$defaultcheckbox->checkboxes); //make it array using explode		
+		<?php		
+		$alldefaultcheckbox = explode("||",$defaultcheckbox->checkboxes); 		
 		$countalldefaultcheckbox = count($alldefaultcheckbox);
 				
 		for($i=0;$i<$countalldefaultcheckbox;$i++) : 

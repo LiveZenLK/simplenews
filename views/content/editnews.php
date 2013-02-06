@@ -26,46 +26,45 @@ if( isset($news) ) { $news = (array)$news; }
 	$id = isset($images['id']) ? $images['id'] : '';
 ?>
 
-<div class="admin-box">	
-    	<div style="float:left; width:100%;">
+<div class="admin-box">
+	<div style="float:left; width:100%;">
 		<?php
-//			$datee = "Dia: %d Mês: %m Ano: %Y - %h:%i %a";
-//			$time = time();
-//			echo date($datee, $time);			
-// 			Display the data of news.
-//			echo 'created_on : ' . $news['created_on'] . '<br />';			
-//			echo 'modified_on : ' . $news['modified_on'] . '<br />';
-//			echo date('j M Y g:i A', strtotime($news['created_on']) );
-//			echo date('j M Y g:i A', strtotime($news['modified_on']) );
-//			echo date('Y-m-j_His', strtotime($news['modified_on']) );	
-//			echo 'Created On  : ' . date('l \d\i\a j \d\e F \d\e Y \a\s h:i:s A', strtotime($news['created_on']));
-//			echo '<br />';
-//			echo 'Modified On :' . date('l \d\i\a j \d\e F \d\e Y \a\s h:i:s A', strtotime($news['modified_on']));
-//			echo '<br /><br />';
-//			echo 'category_id : ' . $news['category_id'] . '<br /><br />';					
-//			echo 'title : ' . $news['title'] . '<br />';
-//			echo 'category_id : ' . $news['category_id'] . '<br />';
-//          echo 'status : ' . $news['status'] . '<br />';
-//			echo 'News selected checkboxes : ' . $news['checkbox'] . '<br />';
-//			echo '<br />Default Checkboxes : ' . $defaultcheckbox['checkboxes'] . '<br /><br />';
-
-// http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/3
-// http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/109
+		
+//	$datee = "Dia: %d Mês: %m Ano: %Y - %h:%i %a";
+//	$time = time();
+//	echo date($datee, $time);			
+// 	Display the data of news.
+//	echo 'created_on : ' . $news['created_on'] . '<br />';			
+//	echo 'modified_on : ' . $news['modified_on'] . '<br />';
+//	echo date('j M Y g:i A', strtotime($news['created_on']) );
+//	echo date('j M Y g:i A', strtotime($news['modified_on']) );
+//	echo date('Y-m-j_His', strtotime($news['modified_on']) );	
+//	echo 'Created On  : ' . date('l \d\i\a j \d\e F \d\e Y \a\s h:i:s A', strtotime($news['created_on']));
+//	echo '<br />';
+//	echo 'Modified On :' . date('l \d\i\a j \d\e F \d\e Y \a\s h:i:s A', strtotime($news['modified_on']));
+//	echo '<br /><br />';
+//	echo 'category_id : ' . $news['category_id'] . '<br /><br />';					
+//	echo 'title : ' . $news['title'] . '<br />';
+//	echo 'category_id : ' . $news['category_id'] . '<br />';
+//  echo 'status : ' . $news['status'] . '<br />';
+//	echo 'News selected checkboxes : ' . $news['checkbox'] . '<br />';
+//	echo '<br />Default Checkboxes : ' . $defaultcheckbox['checkboxes'] . '<br /><br />';
+// 	http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/3
+// 	http://localhost/bonfire/public/index.php/admin/content/simplenews/editnews/109
 			
 		?>
 		
 		<?php foreach ($images as $image) : ?>
 			<?php // echo $image->id; ?>
-			<?php // echo $image->image_newsid; ?>	
-			<?php echo $image->image_file; ?>
+			<?php // echo $image->image_newsid; ?>
+			<?php//  echo $image->image_file; ?>
+			<img src="/assets/images/<?php echo $image->image_file; ?>">
 			<?php // echo $image->image_order; ?>
 			<?php // echo $image->image_title; ?>
-			<?php // echo $image->image_description; ?>	
-		<?php endforeach; ?><br />
-		
-		<a href="http://localhost/bonfire/public/index.php/admin/content/simplenews/newsimages/<?php echo $news['id'];?>"/>Upload Images</a><br />	
-		
-    	</div>
+			<?php // echo $image->image_description; ?>
+			<?php endforeach; ?><br />
+			<a href="http://localhost/bonfire/public/index.php/admin/content/simplenews/newsimages/<?php echo $news['id'];?>"/>Upload Images</a><br />
+	</div>
     
     <?php echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>
     

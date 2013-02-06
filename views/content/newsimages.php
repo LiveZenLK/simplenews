@@ -22,17 +22,17 @@
 <?php endforeach; ?>
 
 <div class="admin-box">
-    <?php echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>
+    <?php echo form_open_multipart($this->uri->uri_string(), 'class="form-horizontal"'); ?>    
     <fieldset>
 	<div class="form-actions">
-	<input type="hidden" id="" name="id" value="0" />
-	<input type="hidden" id="" name="image_newsid" value="1" />
+	<input type="hidden" id="id" name="id" value="" />
+	<input type="hidden" id="image_newsid" name="image_newsid" value="1" />
 	
     <!-- BO Title -->     
     <div class="control-group">
 	    <label class="control-label">Titulo</label>
         <div class="controls">
-			<input type="text" id="" name="image_title" value="" />	
+			<input type="text" id="image_title" name="image_title" value="" />	
         </div>
 	</div>
 	<!-- EO Title -->
@@ -41,7 +41,7 @@
     <!-- Using 'form_dropdown' to load the actual category of a news  -->
     <div class="control-group">
 		<label class="control-label">Image_order</label>
-			<input type="text" id="" name="image_order" value="" />
+			<input type="text" id="image_order" name="image_order" value="" />
 	</div>
 	    
     <!-- BO STATUS form_textarea -->
@@ -53,8 +53,9 @@
 	</div>   
     <!-- EO STATUS form_textarea -->
     
-    <?php echo realpath( FCPATH.'assets/images/');?><br />
-    <input type="file" name="image_file" size="20" value="" />
+    <?php // echo realpath( FCPATH.'assets/images/'); ?><br />
+    <input type="file" id="image_file" name="image_file" size="20" /> 
+    
     <br /><br />
     <input type="submit" name="submit" class="btn btn-primary" value="insert" />
 	
@@ -62,7 +63,7 @@
 	</div>
 	</fieldset>		
     <?php echo form_close(); ?>
-	<!-- EO IMAGE -->
+	<!-- EO IMAGE -->	
 
 
     

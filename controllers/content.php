@@ -7,8 +7,9 @@ class content extends Admin_Controller {
 		parent::__construct();
 		$this->auth->restrict('Simplenews.Content.View');
 		
-		$this->lang->load('simplenews');				
+		$this->lang->load('simplenews');
 		$this->load->helper('form');
+		$this->load->helper('url');
 		$this->load->helper('date');
 		
 		$this->load->model('news_model', null, true);
@@ -69,29 +70,27 @@ class content extends Admin_Controller {
 	/*  Method: create()
 		Creates a simplenews object.
 	*/
-	public function create()
-	{
-	//$this->auth->restrict('Simplenews.Content.Create');
-	//Assets::add_module_js('simplenews', 'simplenews.js');			
-	$this->load->helper('date');
-
-		if ($this->input->post('submit'))
-		{
-			if ($insert_id = $this->save_news())
-			{
+	
+	//---------------------------------------------------------------------
+	// BO create
+	//---------------------------------------------------------------------
+	public function create() {
+		//$this->auth->restrict('Simplenews.Content.Create');
+		//Assets::add_module_js('simplenews', 'simplenews.js');			
+		$this->load->helper('date');
+		if ($this->input->post('submit')) {
+			if ($insert_id = $this->save_news()) {
 				// Log the activity
 				//$this->activity_model->log_activity($this->current_user->id, lang('catalogsys_act_create_record').': ' . $insert_id . ' : ' . $this->input->ip_address(), 'simplenews');
 				Template::set_message(lang('simplenews_act_create_record'), 'success');				
 				$id = $this->db->insert_id();
 				Template::redirect(SITE_AREA .'/content/simplenews/editnews/'.$id);
 			}
-			else
-			{
+			else {
 				//Template::set_message(lang('simplenews_edit_failure') . $this->simplenews_model->error, 'error');
 				Template::set_message(lang('simplenews_edit_failure'), 'error');
 			}
-		}
-		
+		}		
 		$category = $this->category_model->find_all();
 		Template::set('categories', $category);
 		$checkboxes = $this->news_default_checkboxes_model->find(1);
@@ -99,9 +98,13 @@ class content extends Admin_Controller {
 		Template::set('toolbar_title', lang('simplenews_create') . ' simplenews');
 		Template::render();
 	}
-	//--------------------------------------------------------------------
+	//---------------------------------------------------------------------
+	// EO Create
+	//---------------------------------------------------------------------
 	
-	// saving news
+	//---------------------------------------------------------------------
+	// BO saving news
+	//---------------------------------------------------------------------
 	private function save_news($type='insert', $id=0) {
 		
 		if ($type == 'update') {$_POST['id'] = $id; }
@@ -109,46 +112,45 @@ class content extends Admin_Controller {
 		$this->form_validation->set_rules('title', 'title', 					'required|trim|max_length[255]|strip_tags|xss_clean');
 		$this->form_validation->set_rules('category_id', 'category_id', 		'numeric|xss_clean');
 		$this->form_validation->set_rules('status', 'status', 					'numeric|xss_clean');
-		$this->form_validation->set_rules('textarea', 'textarea', 				'required|trim|max_length[255]|strip_tags|xss_clean');		
+		$this->form_validation->set_rules('textarea', 'textarea', 				'required|trim|max_length[255]|strip_tags|xss_clean');
 		$this->form_validation->set_rules('checkbox', 'checkbox', 				'required|xss_clean');
 				
 		if ($this->form_validation->run() === FALSE) {return FALSE;}
 				
 		// make sure we only pass in the fields we want
-		$data = array();
-		
+		$data = array();		
 		$data['modified_on']     	= $this->input->post('modified_on');
-		//$data['created_on']     	= $this->input->post('created_on');
-								
+		//$data['created_on']     	= $this->input->post('created_on');								
 		$data['title']       		= $this->input->post('title');
 		$data['category_id'] 	    = $this->input->post('category_id');
 		$data['status']      		= $this->input->post('status');
 		$data['textarea']     		= $this->input->post('textarea');
-				
+						
 		$checkedboxes1 = $this->input->post('checkbox');
 		$checkedboxes = implode("||",$checkedboxes1);
 		$data['checkbox']       	= $checkedboxes;
 		
-		if ($type == 'insert')
-		{
+		if ($type == 'insert') {
 			$id = $this->news_model->insert($data);
-			if (is_numeric($id))
-			{
+			if (is_numeric($id)) {
 				$return = $id;
-			} else
-			{
+			} else {
 				$return = FALSE;
 			}
 		}
-		else if ($type == 'update')
-		{
+		else if ($type == 'update') {
 			$return = $this->news_model->update($id, $data);
 		}
 		return $return;
 	}
+	// --------------------------------------------------------------------
+	// EO saving news -----------------------------------------------------
+	// --------------------------------------------------------------------
 	
-	public function editnews() {
-				
+	// --------------------------------------------------------------------
+	// BO editnews
+	// --------------------------------------------------------------------
+	public function editnews() {				
 //		$this->auth->restrict('simplenews.Content.Edit');		
 		$id = $this->uri->segment(5);
 		if (empty($id)){
@@ -175,14 +177,19 @@ class content extends Admin_Controller {
 		Template::set('defaultcheckbox', $checkboxes);
 		
 		$newsimages = $this->news_images_model->where('image_newsid', $id)->find_all();		
-		Template::set('images', $newsimages);		
+		Template::set('images', $newsimages);
 	
 		Template::set('toolbar_title', lang('simplenews_edit') . ' Itens');
 		Template::render();
 	}
-//
-public function newsimages()
-	{
+	// --------------------------------------------------------------------
+	//EO editnews----------------------------------------------------------
+	// --------------------------------------------------------------------
+	
+	// --------------------------------------------------------------------
+	// BO newsimages
+	// --------------------------------------------------------------------
+	public function newsimages() {
 	//$this->auth->restrict('Simplenews.Content.Create');
 	//Assets::add_module_js('simplenews', 'simplenews.js');
 	$id = $this->uri->segment(5);
@@ -197,7 +204,7 @@ public function newsimages()
 				// Log the activity
 				$this->activity_model->log_activity($this->current_user->id, lang('catalogsys_act_create_record').': ' . $insert_id . ' : ' . $this->input->ip_address(), 'simplenews');
 
-				Template::set_message(lang('simplenews_act_create_record'), 'success');				
+				Template::set_message(lang('simplenews_act_create_record'), 'success');
 				Template::redirect(SITE_AREA .'/content/simplenews/newsimages/'.$id);
 			}
 			else
@@ -207,108 +214,110 @@ public function newsimages()
 			}
 		}		
 		
-		$newsimages = $this->news_images_model->where('image_newsid', $id)->find_all();		
-		Template::set('images', $newsimages);			
-			
+		$newsimages = $this->news_images_model->where('image_newsid', $id)->find_all();
+		Template::set('images', $newsimages);
+		
 		Template::set('toolbar_title', lang('simplenews_create') . ' simplenews');
 		Template::render();
 	}
-	// EO Upload images
+	// --------------------------------------------------------------------
+	//EO Upload images ----------------------------------------------------
+	// -------------------------------------------------------------------- 
 
-	// BO save images
+	// --------------------------------------------------------------------
+	// BO save images	
+	// --------------------------------------------------------------------
 	private function save_images($type='insert', $id=0) { 
-    // Form validation for the product image isn't really necessary, but we're just going to say that it's required.          
-    //$this->form_validation->set_rules('image_file','Product Image','required');
- 
-    //if ($this->form_validation->run() === FALSE) { return FALSE; } 
-    // make sure we only pass in the fields we want
- 
-    $data = array();
-    //$data['id']        			= $this->input->post('id');
-	$data['image_newsid']       = $this->input->post('image_newsid');
-	$data['image_order']        = $this->input->post('image_order');
-	$data['image_title']        = $this->input->post('image_title');
-	$data['image_description']  = $this->input->post('image_description');
-	$data['image_file']			= $this->input->post('image_file');
- 
-    if ($type == 'insert') {
-	// To get our file data, we're calling $this->savenew(); which handles the actual upload.
-	// Para obter os dados dos nossos arquivos, vamos chamar $ this-> savenew (); que lida com o upload real.
-	
-    $fdata = $this->uploadimages();
-	// We're only really storing the name of the file in the db, so we can point at the right file in our view.
-	// Estamos realmente só armazenar o nome do arquivo no db, para que possamos apontar para o arquivo certo em nossa view.
-        if($fdata['upload_data'] != NULL) {
-            $data['image_file'] = $fdata['upload_data']['image_file'];
-        } else {
-            $data['image_file'] = 'none';
-        }		
-        
-        $id = $this->news_images_model->insert($data);
-				
-        if (is_numeric($id)) {
-            $return = $id;
-        } else {
-			$return = FALSE;
-        }
-    }
-    else if ($type == 'update')
-    {
-        if($this->input->post('image_file')) {
-            $fdata = $this->uploadimages();
-            $data['image_file'] = $fdata['upload_data']['image_file'];
-        } else {
-            $data['image_file'] = $this->input->post('current_image_file');
-        }
-        $return = $this->news_image_model->update($id, $data);
-    }
- 
-    return $return;
-}
-// EO save images
+	    // Form validation for the product image isn't really necessary, but we're just going to say that it's required.          
+	    // $this->form_validation->set_rules('image_file','Product Image','required'); 
+	    // if ($this->form_validation->run() === FALSE) { return FALSE; } 
+	    // make sure we only pass in the fields we want 
+	    		
+		$data = array();
+	    //$data['id']        			= $this->input->post('id');
+		$data['image_newsid']       = $this->input->post('image_newsid');
+		$data['image_order']        = $this->input->post('image_order');
+		$data['image_title']        = $this->input->post('image_title');
+		$data['image_description']  = $this->input->post('image_description');
+		$data['image_file']			= $this->input->post('image_file');
 
-	// save images
-	function uploadimages() {		
-		
+	    if ($type == 'insert') {				
+			
+		// 	To get our file data, we're calling $this->savenew(); which handles the actual upload.
+		// 	Para obter os dados dos nossos arquivos, vamos chamar $ this-> savenew (); que lida com o upload real.
+		//	$fdata['image_file']			= $this->input->post('image_file');
+		//	$data['image_file'] = 'sn_';
+		//	$fdata = $this->uploadimages();
+		/*
+			if(is_array($fdata) && count($fdata) > 0) {
+				if(!empty($fdata['file_name'])) 
+				$data['image_file'] = $fdata['file_name'];
+			}
+		*/
+			 										
+	    // $fdata = $this->uploadimages();
+		// We're only really storing the name of the file in the db, so we can point at the right file in our view.
+		// Estamos realmente só armazenar o nome do arquivo no db, para que possamos apontar para o arquivo certo em nossa view.	        
+	    /*
+		 	if($fdata['upload_data'] != NULL) {
+				$data['image_file'] = $fdata['upload_data']['image_file'];
+			} else {
+		 		$data['image_file'] = 'none';
+			}		
+		*/		      
+	        $id = $this->news_images_model->insert($data);
+	        if (is_numeric($id)) {
+	            $return = $id;
+	        } else {
+				$return = FALSE;
+			}
+		}	
+	    else if ($type == 'update') {
+	    	if($this->input->post('image_file')) {
+	            $fdata = $this->uploadimages();
+	            $data['image_file'] = $fdata['upload_data']['image_file'];
+	        } else {
+	            $data['image_file'] = $this->input->post('current_image_file');
+	        }
+	        $return = $this->news_image_model->update($id, $data);
+	    }
+	return $return;
+	}
+	// --------------------------------------------------------------------
+	// EO save images------------------------------------------------------
+	// --------------------------------------------------------------------	
+	
+	// --------------------------------------------------------------------
+	// BO save upload images
+	// --------------------------------------------------------------------
+	function uploadimages() {
 		//$config['upload_path'] = './uploads/';
-		$config['upload_path'] = realpath(FCPATH.'assets/images/');
+		$config['upload_path'] = realpath(FCPATH.'/assets/images/');
 		$config['allowed_types'] = 'gif|jpg|png';
 		$config['max_size']    = '1000';
 		$config['max_width']  = '2024';
 		$config['max_height']  = '2168';
 		$config['remove_spaces'] = TRUE; //Remove spaces from the file name
-		
+						
 		// You can give video formats if you want to upload any video file.
 		$this->load->library('upload', $config);
         if (!$this->upload->do_upload('image_file')) {
         	$data['error'] = array('error' => $this->upload->display_errors());
-            log_message('error',$data['error']);
+        	log_message('error',$data['error']);
 		}
 		else {
 			$data = array('upload_data' => $this->upload->data());
 		}
-            return $data;        
-		
+		return $data;
 	}
-		
+	// --------------------------------------------------------------------
+	// EO save upload images-----------------------------------------------
+	// --------------------------------------------------------------------
 	
-
-	public function delete()
-	{
-		$this->auth->restrict('Simplenews.Content.Delete');
-
-		$id = $this->uri->segment(5);
-
-		if (!empty($id))
-		{
-
-		}
-
-		redirect(SITE_AREA .'/content/simplenews');
-	}
-	
-	public function createcategory()
-	{
+	// --------------------------------------------------------------------
+	// BO Create Category
+	// --------------------------------------------------------------------
+	public function createcategory() {
 		//$this->auth->restrict('Simplenews.Content.Create');
 		//Assets::add_module_js('simplenews', 'simplenews.js');
 		if ($this->input->post('submit')) {
@@ -329,18 +338,23 @@ public function newsimages()
 		Template::set('toolbar_title', lang('simplenews_create') . ' simplenews');
 		Template::render();
 	}
+	//--------------------------------------------------------------------	
+	// EO Create Category-------------------------------------------------
 	//--------------------------------------------------------------------
-	// saving news
+		
+	//--------------------------------------------------------------------	
+	// BO Save Category
+	//--------------------------------------------------------------------	
 	private function save_category($type='insert', $id=0) {
 		
-		if ($type == 'update') {$_POST['id'] = $id; }
-				
+		if ($type == 'update') { $_POST['id'] = $id; }
+		
 		$this->form_validation->set_rules('category_order', 'category_order', 	'numeric|xss_clean');
 		$this->form_validation->set_rules('category_name', 'category_name', 	'required|trim|max_length[255]|strip_tags|xss_clean');
-		$this->form_validation->set_rules('category_image', 'category_image', 	'trim|max_length[255]|strip_tags|xss_clean');
+		$this->form_validation->set_rules('category_image', 'category_image', 	'trim|max_length[255]|strip_tags|xss_clean');		
 		
 		if ($this->form_validation->run() === FALSE) {return FALSE;}
-				
+						
 		// make sure we only pass in the fields we want
 		$data = array();		
 		$data['category_order']     = $this->input->post('category_order');
@@ -363,7 +377,26 @@ public function newsimages()
 			$return = $this->news_model->update($id, $data);
 		}
 		return $return;
-	}	
+	}
+	//--------------------------------------------------------------------		
+	// EO Save Category---------------------------------------------------
 	//--------------------------------------------------------------------
+		
+	//--------------------------------------------------------------------	
+	// BO Delete
+	//--------------------------------------------------------------------	
+	public function delete()
+	{
+		$this->auth->restrict('Simplenews.Content.Delete');
+
+		$id = $this->uri->segment(5);
+
+		if (!empty($id))
+		{
+
+		}
+
+		redirect(SITE_AREA .'/content/simplenews');
+	}
 
 }
